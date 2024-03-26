@@ -1,0 +1,408 @@
+** ComfyUI startup time: 2024-03-25 20:28:23.444548
+** Platform: Windows
+** Python version: 3.11.5 | packaged by Anaconda, Inc. | (main, Sep 11 2023, 13:26:23) [MSC v.1916 64 bit (AMD64)]
+** Python executable: C:\Users\silvr\anaconda3\envs\Diffuser\python.exe
+** Log path: C:\Users\silvr\OneDrive\Desktop\ComfyUI\comfyui.log
+
+Prestartup times for custom nodes:
+   0.0 seconds: C:\Users\silvr\OneDrive\Desktop\ComfyUI\custom_nodes\ComfyUI-Manager
+
+Total VRAM 16376 MB, total RAM 32602 MB
+Set vram state to: NORMAL_VRAM
+Device: cuda:0 NVIDIA GeForce RTX 4080 : cudaMallocAsync
+VAE dtype: torch.bfloat16
+Using pytorch cross attention
+C:\Users\silvr\anaconda3\envs\Diffuser\Lib\site-packages\transformers\utils\generic.py:441: UserWarning: torch.utils._pytree._register_pytree_node is deprecated. Please use torch.utils._pytree.register_pytree_node instead.
+  _torch_pytree._register_pytree_node(
+### Loading: ComfyUI-Manager (V1.17.1)
+### ComfyUI Revision: 1861 on 'main' [ebc1e045] | Released on '2024-01-29'
+FETCH DATA from: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/custom-node-list.json
+
+Import times for custom nodes:
+   0.0 seconds: C:\Users\silvr\OneDrive\Desktop\ComfyUI\custom_nodes\canvas_tab
+   0.0 seconds: C:\Users\silvr\OneDrive\Desktop\ComfyUI\custom_nodes\comfyui-popup_preview
+   0.0 seconds: C:\Users\silvr\OneDrive\Desktop\ComfyUI\custom_nodes\step-slider
+   0.0 seconds: C:\Users\silvr\OneDrive\Desktop\ComfyUI\custom_nodes\efficiency-nodes-comfyui
+   0.0 seconds: C:\Users\silvr\OneDrive\Desktop\ComfyUI\custom_nodes\ComfyI2I
+   0.0 seconds: C:\Users\silvr\OneDrive\Desktop\ComfyUI\custom_nodes\comfyui-photoshop
+   0.0 seconds: C:\Users\silvr\OneDrive\Desktop\ComfyUI\custom_nodes\efficiency-nodes-comfyui-LACE
+   0.2 seconds: C:\Users\silvr\OneDrive\Desktop\ComfyUI\custom_nodes\ComfyUI-Manager
+
+Starting server
+
+To see the GUI go to: http://127.0.0.1:8188
+FETCH DATA from: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/extension-node-map.json
+FETCH DATA from: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/model-list.json
+FETCH DATA from: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/alter-list.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/model-list.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/alter-list.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/extension-node-map.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/custom-node-list.json
+got prompt
+Requested to load SDXLClipModel
+Loading 1 new model
+C:\Users\silvr\OneDrive\Desktop\ComfyUI\comfy\ldm\modules\attention.py:318: UserWarning: 1Torch was not compiled with flash attention. (Triggered internally at ..\aten\src\ATen\native\transformers\cuda\sdp_utils.cpp:281.)
+  out = torch.nn.functional.scaled_dot_product_attention(q, k, v, attn_mask=mask, dropout_p=0.0, is_causal=False)
+----------------------------------------
+[36mEfficient Loader (LACE) Models Cache:[0m
+Ckpt:
+  [1] sd_xl_turbo_1.0_fp16
+
+>>>>>>>>>>>>> Mark 1 <<<<<<<<<<<<<
+>>>>>>>>>> diffusion step from GUI = 0
+Requested to load SDXL
+Loading 1 new model
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 0
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 1
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 1
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 2
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 2
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 3
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 3
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 4
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 4
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 5
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 5
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 6
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 6
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 7
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 7
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 8
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 8
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 9
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 9
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+intermediate_latent type: <class 'list'>
+intermediate_latent len: 10
+intermediate_latent[0]: {'samples': tensor([[[[ -53.0594,  -47.2450,   76.6312,  ...,  -21.6023,  -79.4148,
+            -67.6537],
+          [ -50.1245,  -90.8735, -130.2537,  ...,    6.1301,   -4.8401,
+              4.2227],
+          [ -54.2635,  -56.7738,    3.8518,  ...,  147.1566,   -2.7454,
+             41.1935],
+          ...,
+          [   5.4090,  -80.6233,   53.5849,  ..., -101.7802,  -73.1531,
+            -82.2403],
+          [  39.6691,  -20.8599,   27.9174,  ...,  -68.4758,   38.5775,
+             85.6515],
+          [ -24.8624,   92.9885,    9.1948,  ...,  -25.0343,  -43.5457,
+             63.0939]],
+
+         [[  36.8546,   41.4582,  -16.7878,  ...,  -96.4170,   73.0165,
+           -109.0765],
+          [  -9.1823,   35.2978,   31.2028,  ...,   22.4068,  -12.4272,
+            107.8840],
+          [ -57.9041,  -20.6102,  -44.3252,  ...,   -8.3026,   65.8077,
+            -31.1071],
+          ...,
+          [ -67.0897,   33.2076,   24.7562,  ...,   42.0765,   82.0888,
+            -17.5632],
+          [ -21.4243,  -93.4957,  -71.8599,  ...,  -25.1227,   36.3684,
+            -36.7661],
+          [   7.0621,  -27.1159,   35.7680,  ...,  -51.0325,  -66.9828,
+            -27.3138]],
+
+         [[ -18.0467,  -43.7323,  -27.4323,  ...,   72.9999,  -43.4752,
+              1.7117],
+          [ -79.4268,   36.6491,  -30.6316,  ...,   -9.0741,  -24.6749,
+             24.8889],
+          [   2.1728,    1.7288,   -7.8978,  ...,  -16.0702,   -6.5211,
+           -103.1538],
+          ...,
+          [ -20.1571,   -9.4569,  -30.4852,  ...,   75.7575,  -29.9986,
+            -80.6239],
+          [  30.5687,  -70.0413,  -88.1677,  ...,   29.4332,  -54.4252,
+            -83.6905],
+          [ -80.3556,  -31.4139,   21.4226,  ...,   72.7886,    8.8455,
+           -128.7296]],
+
+         [[   0.7204,   94.3580, -136.7835,  ...,  -88.1452,  -65.6848,
+             87.4689],
+          [ -14.2646,  -61.4653,  -51.4513,  ...,   49.0239,    5.3084,
+             -8.9942],
+          [ -50.2803,  -96.4529,  -22.7145,  ...,   82.0419,  -35.6647,
+            -41.9849],
+          ...,
+          [  44.5896, -187.9481,  -94.1446,  ...,  -98.6819,    4.9549,
+            -43.6320],
+          [  27.8978,  -38.1166, -109.1245,  ...,    8.4998, -106.5883,
+            -24.6055],
+          [  -9.1079,  -64.3222,   63.9737,  ...,    4.0990,  -58.7208,
+            -22.1995]]]])}
+Requested to load AutoencoderKL
+Loading 1 new model
+
+>>>>>>>>>>>>> Mark 2 <<<<<<<<<<<<<
+preview type: <class 'dict'>
+preview keys: dict_keys(['images'])
+preview images len: 1
+preview['images]:[{'filename': 'ComfyUI_temp_anpjh_00001_.png', 'subfolder': '', 'type': 'temp'}]
+
+>>>>>>>>>>>>> Mark 3 <<<<<<<<<<<<<
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+>>>>>>>>>>>>> Mark 4 <<<<<<<<<<<<<
+Prompt executed in 8.52 seconds
+got prompt
+ERROR:root:Failed to validate prompt for output 18:
+ERROR:root:* (prompt):
+ERROR:root:  - Value 256 smaller than min of 320: tile_size
+ERROR:root:* LACE Visualizer 18:
+ERROR:root:  - Value 256 smaller than min of 320: tile_size
+ERROR:root:Output will be ignored
+
+>>>>>>>>>>>>> Mark 1 <<<<<<<<<<<<<
+>>>>>>>>>> diffusion step from GUI = 0
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 0
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 1
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 1
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 2
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 2
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 3
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 3
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 4
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 4
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 5
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 5
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 6
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 6
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 7
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 7
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 8
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 8
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 9
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 9
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+intermediate_latent type: <class 'list'>
+intermediate_latent len: 10
+intermediate_latent[0]: {'samples': tensor([[[[  58.4995,  115.8662,  -11.7804,  ...,   33.9307,   63.2124,
+            -32.0582],
+          [  53.4619,  -12.2069,   46.5677,  ...,   77.1270,  -42.5051,
+            -67.3683],
+          [  35.3007,  -11.5639,   87.6658,  ...,   -9.1603,  -41.8029,
+             22.8786],
+          ...,
+          [ -12.6221,    7.7259,  -81.6805,  ...,  -72.3493,  -63.4935,
+            -39.5217],
+          [ 117.5766,  -87.2582,  -93.2806,  ...,   21.3070,  -43.7228,
+              4.5135],
+          [-144.0890,  -97.5616,  -12.6435,  ...,   61.3485,   49.0311,
+              2.1018]],
+
+         [[ 101.1991,   16.7643,  -24.7066,  ...,   74.9252,   27.4391,
+             -0.7409],
+          [  27.7266,   21.6326,    4.2809,  ...,  -23.1074,   90.6118,
+            105.6130],
+          [  89.7591,   12.4232,   62.0909,  ...,   90.9464,   -1.1699,
+             84.5015],
+          ...,
+          [ -31.7130,    3.4525,  -33.3555,  ...,    0.4313, -115.4454,
+            -33.5181],
+          [ -70.6649,  -70.1440,  -13.5458,  ...,   30.6441,  -83.8591,
+              8.6088],
+          [  24.4296,  -33.6722,   18.3419,  ...,   25.1587,   -9.1789,
+            -19.5300]],
+
+         [[  19.2867,  128.7554,   60.2084,  ...,   37.6064,   -3.2091,
+            -20.6077],
+          [ 129.2489,   17.8892,  187.9242,  ...,   14.2558,   -8.8825,
+             58.2122],
+          [  78.1656,   48.8964,   29.8665,  ...,    9.4383,  -56.1656,
+            109.7609],
+          ...,
+          [   5.9175,    8.4985,   52.5250,  ...,  -55.1426,  116.7928,
+             30.2303],
+          [ 121.8857,   68.9539,   58.9115,  ...,  -12.6486,   61.8390,
+            -26.4352],
+          [  30.5345,  -51.3585,  -98.3478,  ...,  -64.0822,   32.8334,
+            -31.4071]],
+
+         [[   0.5559,  -22.1332,   36.8293,  ...,   40.5836, -100.0878,
+             18.4561],
+          [   6.0338,   48.5512,  -19.6464,  ...,  119.4484,  132.9969,
+            -56.2968],
+          [  -9.8791,  -56.1621,   12.6649,  ...,  122.0439,  -58.8930,
+             46.8941],
+          ...,
+          [   2.5797,  -69.2208,  -78.9473,  ...,    0.4539,  -19.7191,
+            -80.9261],
+          [ -34.8179,  -50.2545,   89.6962,  ...,  -93.9370, -132.8854,
+            -22.5641],
+          [ -32.7927,   47.0859,    7.3367,  ...,   16.7769,  133.1837,
+             70.5714]]]])}
+
+>>>>>>>>>>>>> Mark 2 <<<<<<<<<<<<<
+preview type: <class 'dict'>
+preview keys: dict_keys(['images'])
+preview images len: 1
+preview['images]:[{'filename': 'ComfyUI_temp_pmlnj_00001_.png', 'subfolder': '', 'type': 'temp'}]
+
+Prompt executed in 3.93 seconds
+
+Stopped server

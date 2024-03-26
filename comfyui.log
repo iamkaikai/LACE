@@ -1,0 +1,2258 @@
+** ComfyUI startup time: 2024-03-25 20:28:58.180315
+** Platform: Windows
+** Python version: 3.11.5 | packaged by Anaconda, Inc. | (main, Sep 11 2023, 13:26:23) [MSC v.1916 64 bit (AMD64)]
+** Python executable: C:\Users\silvr\anaconda3\envs\Diffuser\python.exe
+** Log path: C:\Users\silvr\OneDrive\Desktop\ComfyUI\comfyui.log
+
+Prestartup times for custom nodes:
+   0.0 seconds: C:\Users\silvr\OneDrive\Desktop\ComfyUI\custom_nodes\ComfyUI-Manager
+
+Total VRAM 16376 MB, total RAM 32602 MB
+Set vram state to: NORMAL_VRAM
+Device: cuda:0 NVIDIA GeForce RTX 4080 : cudaMallocAsync
+VAE dtype: torch.bfloat16
+Using pytorch cross attention
+C:\Users\silvr\anaconda3\envs\Diffuser\Lib\site-packages\transformers\utils\generic.py:441: UserWarning: torch.utils._pytree._register_pytree_node is deprecated. Please use torch.utils._pytree.register_pytree_node instead.
+  _torch_pytree._register_pytree_node(
+### Loading: ComfyUI-Manager (V1.17.1)
+### ComfyUI Revision: 1861 on 'main' [ebc1e045] | Released on '2024-01-29'
+FETCH DATA from: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/custom-node-list.json
+
+Import times for custom nodes:
+   0.0 seconds: C:\Users\silvr\OneDrive\Desktop\ComfyUI\custom_nodes\canvas_tab
+   0.0 seconds: C:\Users\silvr\OneDrive\Desktop\ComfyUI\custom_nodes\step-slider
+   0.0 seconds: C:\Users\silvr\OneDrive\Desktop\ComfyUI\custom_nodes\comfyui-popup_preview
+   0.0 seconds: C:\Users\silvr\OneDrive\Desktop\ComfyUI\custom_nodes\efficiency-nodes-comfyui
+   0.0 seconds: C:\Users\silvr\OneDrive\Desktop\ComfyUI\custom_nodes\ComfyI2I
+   0.0 seconds: C:\Users\silvr\OneDrive\Desktop\ComfyUI\custom_nodes\comfyui-photoshop
+   0.0 seconds: C:\Users\silvr\OneDrive\Desktop\ComfyUI\custom_nodes\efficiency-nodes-comfyui-LACE
+   0.2 seconds: C:\Users\silvr\OneDrive\Desktop\ComfyUI\custom_nodes\ComfyUI-Manager
+
+Starting server
+
+To see the GUI go to: http://127.0.0.1:8188
+FETCH DATA from: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/extension-node-map.json
+FETCH DATA from: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/model-list.json
+FETCH DATA from: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/alter-list.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/alter-list.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/model-list.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/extension-node-map.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/custom-node-list.json
+got prompt
+Requested to load SDXLClipModel
+Loading 1 new model
+C:\Users\silvr\OneDrive\Desktop\ComfyUI\comfy\ldm\modules\attention.py:318: UserWarning: 1Torch was not compiled with flash attention. (Triggered internally at ..\aten\src\ATen\native\transformers\cuda\sdp_utils.cpp:281.)
+  out = torch.nn.functional.scaled_dot_product_attention(q, k, v, attn_mask=mask, dropout_p=0.0, is_causal=False)
+----------------------------------------
+[36mEfficient Loader (LACE) Models Cache:[0m
+Ckpt:
+  [1] sd_xl_turbo_1.0_fp16
+
+>>>>>>>>>>>>> Mark 1 <<<<<<<<<<<<<
+>>>>>>>>>> diffusion step from GUI = 0
+Requested to load SDXL
+Loading 1 new model
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 0
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 1
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 1
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 2
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 2
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 3
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 3
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 4
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 4
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 5
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 5
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 6
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 6
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 7
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 7
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 8
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 8
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 9
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 9
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+intermediate_latent type: <class 'list'>
+intermediate_latent len: 10
+intermediate_latent[0]: {'samples': tensor([[[[-4.6451e+01, -5.5365e+01,  2.5315e+01,  ...,  7.6034e+01,
+           -6.5510e+01,  5.3273e+01],
+          [-1.6860e+02, -6.9682e+01,  4.4099e+01,  ...,  1.2867e+01,
+            5.1519e+01, -7.0807e+01],
+          [-9.8590e+01,  3.6145e+01,  9.1841e-01,  ..., -1.3321e+02,
+           -1.8358e+01,  3.5797e+00],
+          ...,
+          [-2.0587e+01,  2.5267e+01, -3.4134e+01,  ..., -6.8136e+01,
+           -9.8249e+01, -1.4417e+01],
+          [ 5.9020e+01,  6.7041e+01, -1.5393e+01,  ..., -8.0689e+01,
+            2.8478e+01,  4.2017e+01],
+          [ 1.1127e+01, -3.3766e+01, -1.9523e+01,  ..., -1.0450e+02,
+            9.8196e+01,  2.3033e+00]],
+
+         [[-7.9899e+01, -8.9178e+01, -4.6897e+01,  ..., -8.3557e+01,
+            4.9228e+01,  2.8463e+01],
+          [-1.1673e+02, -5.2655e+01, -2.9072e+01,  ..., -7.6170e+00,
+           -5.1645e+01,  1.9210e+01],
+          [-2.0206e+00, -5.5947e+01, -1.6528e+01,  ..., -1.6452e+02,
+            6.3069e+01,  9.3869e+01],
+          ...,
+          [-4.9503e+01, -7.5893e+01, -2.9390e+01,  ...,  7.3324e+00,
+            3.2395e+01,  6.9858e+01],
+          [-6.0621e+01,  1.2171e+02,  3.8693e+01,  ..., -1.6778e+01,
+            2.4845e+01,  4.5315e+01],
+          [ 5.7737e+01,  1.0314e+02, -5.2205e+01,  ...,  4.9651e+01,
+            9.1853e+01, -8.5356e+01]],
+
+         [[ 1.7626e+01,  1.6359e+01,  1.0338e+02,  ..., -2.2073e+01,
+            6.5500e+01, -2.5553e+01],
+          [ 4.6194e+01, -2.2625e+01, -1.2527e+02,  ...,  1.3493e+01,
+            3.1360e+01,  7.5356e+00],
+          [ 4.0808e+01,  9.2319e+01,  1.9292e+02,  ...,  5.6411e+01,
+            9.5243e+01, -2.3121e+01],
+          ...,
+          [ 1.7532e+02, -2.5297e+01,  7.5972e+01,  ..., -8.3003e+01,
+           -7.9186e+01, -2.4020e+01],
+          [-6.8788e+01,  2.6814e+00,  5.4538e+00,  ...,  5.5569e+01,
+           -3.0465e+01,  8.8892e+01],
+          [-1.6575e+01,  3.1714e+01, -1.1170e+02,  ...,  9.0764e+01,
+            4.0036e+01,  2.1510e+01]],
+
+         [[-5.0557e+01, -1.0999e+02,  5.8056e+01,  ..., -1.1974e-01,
+            1.1295e+01, -2.2682e+01],
+          [-5.1638e+01, -1.2109e+02,  6.9527e+01,  ..., -3.4830e+00,
+            2.3186e+00, -4.1703e+01],
+          [-5.7340e+01, -2.1504e+01,  1.4668e+01,  ...,  3.0973e+01,
+            7.5349e+01,  2.2112e+01],
+          ...,
+          [ 1.0137e+01, -9.6946e+01,  1.1916e+01,  ...,  2.4744e+00,
+           -7.9930e+00, -1.4683e+02],
+          [ 2.5275e+01, -9.3708e-01,  3.1756e+01,  ...,  3.0188e+01,
+            8.3601e+01,  3.2942e+01],
+          [ 2.6329e+01,  2.1214e+01,  1.6332e+01,  ...,  4.8463e+01,
+           -1.4009e+01,  1.5728e+02]]]])}
+Requested to load AutoencoderKL
+Loading 1 new model
+
+>>>>>>>>>>>>> Mark 2 <<<<<<<<<<<<<
+preview type: <class 'dict'>
+preview keys: dict_keys(['images'])
+preview images len: 1
+preview['images]:[{'filename': 'ComfyUI_temp_zfgeg_00001_.png', 'subfolder': '', 'type': 'temp'}]
+
+>>>>>>>>>>>>> Mark 3 <<<<<<<<<<<<<
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+>>>>>>>>>>>>> Mark 4 <<<<<<<<<<<<<
+Prompt executed in 8.37 seconds
+got prompt
+
+>>>>>>>>>>>>> Mark 1 <<<<<<<<<<<<<
+>>>>>>>>>> diffusion step from GUI = 0
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 0
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 1
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 1
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 2
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 2
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 3
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 3
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 4
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 4
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 5
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 5
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 6
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 6
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 7
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 7
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 8
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 8
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 9
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 9
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+intermediate_latent type: <class 'list'>
+intermediate_latent len: 10
+intermediate_latent[0]: {'samples': tensor([[[[-2.8020e+01,  1.9270e+01,  6.4952e+01,  ..., -4.2317e+01,
+            6.3478e+01,  9.8976e+00],
+          [-5.7892e+01, -8.3423e+01, -7.6718e+00,  ..., -3.5858e+01,
+            2.0712e+01,  1.2069e+01],
+          [ 1.8656e+01, -5.2656e+01, -8.6243e+01,  ...,  2.2531e+01,
+           -1.0249e+02,  1.0311e-01],
+          ...,
+          [ 1.5260e+01,  4.7984e+00,  8.5676e+01,  ..., -8.7094e+01,
+           -1.0510e+02, -1.9264e+01],
+          [ 3.7110e+01,  1.5566e+01,  2.6176e+01,  ...,  9.0193e+01,
+           -2.2239e+01, -1.3921e+01],
+          [ 4.5443e+01,  2.6485e+00, -4.2633e+01,  ..., -1.0069e+02,
+           -1.9167e+01, -3.9870e+01]],
+
+         [[ 5.9385e+01,  6.5740e+01, -5.0032e+01,  ...,  3.4204e+01,
+            7.8357e+01, -2.4277e+00],
+          [ 3.4440e+01, -2.3456e+01, -3.5810e+01,  ..., -4.4247e+01,
+            8.5446e+01, -1.8134e+01],
+          [ 9.2938e+01, -7.7738e+01, -4.9259e+01,  ..., -5.5539e+01,
+            7.4166e+01, -2.5616e+01],
+          ...,
+          [ 9.6545e+01, -1.2894e+01,  3.3371e+01,  ..., -5.0774e+01,
+            2.7716e-01, -7.7342e+01],
+          [ 3.2551e+01,  1.4145e+02, -6.9540e+00,  ...,  1.2701e+02,
+           -1.4073e+01,  1.5260e+01],
+          [ 4.8425e+01,  5.7953e+01,  5.7621e+00,  ...,  1.0281e+02,
+            6.0866e+01, -9.5392e+00]],
+
+         [[ 4.0206e+01, -2.1806e+00, -8.6811e+01,  ..., -8.1893e+00,
+            7.3240e-02,  2.2749e+01],
+          [ 5.3549e+01, -2.3093e+01,  9.9123e+01,  ...,  1.2395e+01,
+           -2.3247e-01,  7.1345e+01],
+          [-4.8845e+01,  3.5102e+00, -9.1190e+01,  ...,  1.7813e+01,
+            7.7423e+01,  1.3580e+02],
+          ...,
+          [-5.8786e+01, -4.6010e+01,  9.0865e+00,  ..., -3.6916e-01,
+            1.4195e+01, -1.3522e+02],
+          [ 3.7668e+01,  5.5738e+01,  5.9788e+01,  ...,  3.3185e+01,
+           -1.4767e+02,  5.1160e+01],
+          [ 4.8526e+01,  3.6267e+01,  5.0606e+01,  ...,  8.3272e+01,
+            2.2929e+00, -9.3546e+01]],
+
+         [[ 5.2215e+01, -3.6481e+01, -2.8306e+01,  ...,  5.4249e+01,
+            2.5718e+01, -4.0656e+01],
+          [-4.9515e+00,  4.1208e+01, -2.0019e+02,  ..., -3.3091e+01,
+            7.4214e+01,  1.0255e+02],
+          [ 6.2282e+01, -2.3966e+01,  7.4660e-01,  ..., -8.1750e+01,
+           -1.3750e+01,  3.3639e+01],
+          ...,
+          [ 8.2966e+01, -8.6391e+01, -3.9536e+01,  ..., -4.9406e-01,
+            4.2881e+01,  4.0351e+01],
+          [-5.4753e+01, -3.3682e+01,  3.8718e+01,  ...,  4.4910e+01,
+            9.1184e+01,  5.3661e+01],
+          [-1.3326e+01, -6.4622e+01, -3.2579e+00,  ..., -1.1487e+02,
+           -5.5384e+01, -1.8002e+01]]]])}
+
+>>>>>>>>>>>>> Mark 2 <<<<<<<<<<<<<
+preview type: <class 'dict'>
+preview keys: dict_keys(['images'])
+preview images len: 1
+preview['images]:[{'filename': 'ComfyUI_temp_ioore_00001_.png', 'subfolder': '', 'type': 'temp'}]
+
+>>>>>>>>>>>>> Mark 3 <<<<<<<<<<<<<
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+>>>>>>>>>>>>> Mark 4 <<<<<<<<<<<<<
+Prompt executed in 4.83 seconds
+got prompt
+
+>>>>>>>>>>>>> Mark 1 <<<<<<<<<<<<<
+>>>>>>>>>> diffusion step from GUI = 0
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 0
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 1
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 1
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 2
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 2
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 3
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 3
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 4
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 4
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 5
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 5
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 6
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 6
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 7
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 7
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 8
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 8
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 9
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 9
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+intermediate_latent type: <class 'list'>
+intermediate_latent len: 10
+intermediate_latent[0]: {'samples': tensor([[[[ -23.7881,   42.3575,   29.5957,  ...,   76.2949,   40.0348,
+              3.8926],
+          [ -52.2766,  -37.7534,  -50.7167,  ...,  156.6276,  -18.4849,
+            -11.1814],
+          [ -19.2837,  -88.2203,   13.6050,  ...,   47.9347,   79.0288,
+            -57.1964],
+          ...,
+          [  26.2889,  -19.9537,    2.6697,  ...,    8.6596,   54.7556,
+            107.5426],
+          [   9.1773,    3.3691,  -17.7852,  ...,   20.2564, -179.1185,
+            154.3932],
+          [ -93.1585,  -20.8584,   66.5096,  ...,   70.5405, -125.0151,
+            -94.0721]],
+
+         [[ -79.5044,    2.8165,   25.3163,  ...,   22.8864,  -73.2149,
+             12.9752],
+          [  70.6761,  -85.4974,  -12.4885,  ...,  122.9256,  -95.6460,
+            -56.9770],
+          [   6.7343,  -21.8713,  -81.7451,  ...,   79.0915,   48.2719,
+             60.5017],
+          ...,
+          [ 106.0984,   21.8643,   69.8268,  ...,   32.8357,    4.1595,
+             21.5473],
+          [  64.4137, -149.3512,  -80.0421,  ...,  -82.0914,  -58.7023,
+             61.5669],
+          [ -40.7539,  -68.2048,  -25.6666,  ...,   11.6417,  -66.3113,
+             -5.8560]],
+
+         [[ -12.1647,  -27.6537,   75.8997,  ...,  -48.4328,  -25.0939,
+             77.9597],
+          [  86.7625,   43.4733,  -41.5682,  ...,  -20.2847,  111.5948,
+            -20.2573],
+          [  23.3026,  107.0727,   25.6540,  ...,  -18.6303, -128.6846,
+             48.9932],
+          ...,
+          [  21.7944,  -24.2648,  -34.7887,  ...,  -21.5326,   17.4323,
+              0.3510],
+          [ -21.7503,   35.5905,   21.3764,  ...,  -11.1994,   24.0600,
+            -38.5600],
+          [ -50.6972,  -24.2101,  -10.3275,  ...,  -84.7869,    4.1254,
+            -55.9431]],
+
+         [[ -13.8404,  -56.3267,    3.1398,  ...,  -26.2811,   -8.1065,
+           -123.6339],
+          [  -9.6332,  -48.1973,   41.3252,  ...,  122.5749,  -58.5507,
+             70.5914],
+          [  60.1618,   -1.3148,   39.1401,  ...,   44.5813,  -39.4291,
+              5.7274],
+          ...,
+          [ -26.4825,  -68.1099,  141.6578,  ...,  -31.0458,   45.9400,
+             -1.1507],
+          [  23.4891,  -17.7949,  167.3934,  ...,  -62.4255,  -90.9538,
+            -10.9109],
+          [ -81.2792,  -25.7501,   27.8110,  ...,   55.6803,    0.5952,
+             17.4597]]]])}
+
+>>>>>>>>>>>>> Mark 2 <<<<<<<<<<<<<
+preview type: <class 'dict'>
+preview keys: dict_keys(['images'])
+preview images len: 1
+preview['images]:[{'filename': 'ComfyUI_temp_arysf_00001_.png', 'subfolder': '', 'type': 'temp'}]
+
+>>>>>>>>>>>>> Mark 3 <<<<<<<<<<<<<
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+>>>>>>>>>>>>> Mark 4 <<<<<<<<<<<<<
+Prompt executed in 4.75 seconds
+got prompt
+
+>>>>>>>>>>>>> Mark 1 <<<<<<<<<<<<<
+>>>>>>>>>> diffusion step from GUI = 0
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 0
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 1
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 1
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 2
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 2
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 3
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 3
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 4
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 4
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 5
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 5
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 6
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 6
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 7
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 7
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 8
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 8
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 9
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 9
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+intermediate_latent type: <class 'list'>
+intermediate_latent len: 10
+intermediate_latent[0]: {'samples': tensor([[[[ -39.2264,  106.2453,   65.7241,  ...,   21.8352,  -98.4659,
+            -11.6659],
+          [  57.6445,   93.6293,   50.6253,  ...,  -53.4922,   43.4609,
+            -52.2244],
+          [  31.3470,  -62.3327,   -9.8731,  ...,   17.6326,  144.5713,
+              9.0685],
+          ...,
+          [ -11.1441,  -37.7907,   91.6391,  ...,   64.2934,  126.7320,
+            -42.1065],
+          [  13.6474,   94.0255,    8.7477,  ...,  -43.8131,  -62.4049,
+             48.4151],
+          [   1.9476,   53.7386,   21.2419,  ...,  -27.6303,   52.7493,
+              5.5974]],
+
+         [[  74.9464,  -57.5908,   58.9427,  ...,   23.4990,   -2.9779,
+            -67.3015],
+          [  47.2618,   16.5817,  -41.4469,  ...,   -9.7123,  -44.2402,
+             63.6224],
+          [ 139.9170,   57.3757, -133.8626,  ...,   84.9178,   22.3331,
+              3.5339],
+          ...,
+          [ -25.7388,  -24.8390,  -49.2661,  ...,  -66.0283,  -95.6816,
+           -105.8645],
+          [ -60.3884,   12.0623,  -64.2902,  ...,   -9.4032,   50.4293,
+             95.8716],
+          [  30.1835,  -28.8553, -107.9346,  ...,  -66.1681,    7.4844,
+             -7.8610]],
+
+         [[  74.7766,   64.8255,   -0.2757,  ...,   52.8844,   57.8327,
+            -24.6320],
+          [   4.0190,   19.0409,  -20.2375,  ...,  -55.1194,   41.2868,
+             17.6444],
+          [  34.8821,   49.0050,   97.3834,  ...,   30.5481,   13.5987,
+           -117.3627],
+          ...,
+          [  50.1692,   -6.9860,   73.6849,  ...,  -57.7519,   89.9107,
+             15.9769],
+          [ -11.3816,   -9.1437,   38.2476,  ...,  -12.9366,  -43.6354,
+             98.7602],
+          [-127.4746,   30.5473,  -20.5098,  ...,  -20.4444,   16.6381,
+             17.5625]],
+
+         [[ -28.9230,  -34.5933,  -52.7505,  ...,  150.1494,   72.3696,
+            -89.5957],
+          [ -34.9345,  122.0162,  -72.5013,  ..., -110.9458,   39.8657,
+             25.7771],
+          [ -19.3857,  -36.8386,   67.6458,  ...,   10.8400,   64.1240,
+            -41.2959],
+          ...,
+          [ -24.2114,  -53.5688,   42.9230,  ...,   -2.4836,  -55.7842,
+             -8.8114],
+          [   0.7027,   39.7821,   14.8860,  ..., -109.0015,    4.2156,
+            -20.0898],
+          [  57.0738,  -29.2149,   18.4056,  ...,   20.1685,   55.5676,
+             27.1664]]]])}
+
+>>>>>>>>>>>>> Mark 2 <<<<<<<<<<<<<
+preview type: <class 'dict'>
+preview keys: dict_keys(['images'])
+preview images len: 1
+preview['images]:[{'filename': 'ComfyUI_temp_ouhfe_00001_.png', 'subfolder': '', 'type': 'temp'}]
+
+>>>>>>>>>>>>> Mark 3 <<<<<<<<<<<<<
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+>>>>>>>>>>>>> Mark 4 <<<<<<<<<<<<<
+Prompt executed in 4.73 seconds
+got prompt
+
+>>>>>>>>>>>>> Mark 1 <<<<<<<<<<<<<
+>>>>>>>>>> diffusion step from GUI = 0
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 0
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 1
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 1
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 2
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 2
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 3
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 3
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 4
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 4
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 5
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 5
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 6
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 6
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 7
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 7
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 8
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 8
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 9
+sampler_name = euler_test
+>>>>>>>>>> recieved diffusion_step = 9
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+intermediate_latent type: <class 'list'>
+intermediate_latent len: 10
+intermediate_latent[0]: {'samples': tensor([[[[ 126.0053,   88.4860,   -7.6173,  ...,   57.5983,   59.7970,
+            -87.8616],
+          [ -32.9815,  -53.3552,   35.7240,  ...,  -22.3946, -116.2308,
+           -136.0674],
+          [  82.5892,  -22.3847,  -69.8279,  ...,   84.7846,   29.8193,
+            -34.3586],
+          ...,
+          [ -80.8661,   88.4306,   36.4927,  ...,  -87.2813,   29.0999,
+            192.4309],
+          [ -73.4842,   77.5358,   38.6093,  ...,   22.3422,  -25.0767,
+             57.2375],
+          [   0.6348,   25.1246,   38.5913,  ...,  103.6314,  -31.0682,
+            151.1785]],
+
+         [[  -4.2285, -152.1272,  -11.9743,  ...,   53.2723,  -35.6919,
+              4.1390],
+          [ -42.1726,  -39.4855,  -40.9391,  ...,  -47.6200,   65.4667,
+            -33.5314],
+          [ -83.0401,  -54.0714,  -34.9720,  ...,   35.0761,  110.0849,
+            -49.2536],
+          ...,
+          [  20.4147,  -37.5838, -105.6418,  ...,   37.2982,   12.6358,
+            -72.0239],
+          [  41.0066,  119.2792,  -36.7904,  ...,   66.3373,  -75.5196,
+             27.1936],
+          [ 100.2101,   74.7167,    7.8025,  ...,   10.4702,  -29.8718,
+             14.8272]],
+
+         [[  27.0630,  -41.3087,   54.9658,  ...,  -93.6329,  -30.8135,
+            154.3912],
+          [ -41.5486,  108.7711,  125.1256,  ...,  -10.6586,  -12.5069,
+             12.5055],
+          [   2.0237,  -23.0351,  168.2811,  ...,  127.2969,  -14.0410,
+             -7.2802],
+          ...,
+          [  71.9441,   -2.0883,   36.3294,  ...,   20.7765,   85.7561,
+             65.9070],
+          [ -17.9849,  114.6548, -104.9821,  ...,   22.7207,  129.8195,
+            -15.3041],
+          [  52.5763,   61.4059,   41.6106,  ...,   -2.2186,   32.8971,
+             21.7730]],
+
+         [[-168.3663, -147.8773,    1.4131,  ...,   56.9573,    1.0499,
+             20.8057],
+          [ -11.3822,    6.8722,  -29.6127,  ...,  -36.7704,  -34.4997,
+             51.7803],
+          [ -40.6610, -103.8595,   46.3775,  ...,   77.7724,  -84.8755,
+            -13.6187],
+          ...,
+          [ -12.8267,  -59.2139,   83.0657,  ...,    0.2181,   87.6901,
+             44.3651],
+          [ -34.4569,  -66.5595,   71.0242,  ...,  -18.7629,  -14.0096,
+            -48.0002],
+          [  42.6283,   71.6854,  117.8464,  ...,   84.4551,   32.9117,
+              7.1361]]]])}
+
+>>>>>>>>>>>>> Mark 2 <<<<<<<<<<<<<
+preview type: <class 'dict'>
+preview keys: dict_keys(['images'])
+preview images len: 1
+preview['images]:[{'filename': 'ComfyUI_temp_idkvz_00001_.png', 'subfolder': '', 'type': 'temp'}]
+
+>>>>>>>>>>>>> Mark 3 <<<<<<<<<<<<<
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+>>>>>>>>>>>>> Mark 4 <<<<<<<<<<<<<
+Prompt executed in 4.72 seconds
+got prompt
+
+>>>>>>>>>>>>> Mark 1 <<<<<<<<<<<<<
+>>>>>>>>>> diffusion step from GUI = 0
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 1
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 2
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 3
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 4
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 5
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 6
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 7
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 8
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 9
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+intermediate_latent type: <class 'list'>
+intermediate_latent len: 10
+intermediate_latent[0]: {'samples': tensor([[[[  31.3386,   28.0390,  -77.3578,  ...,   57.5385,   11.5299,
+           -107.9232],
+          [   2.3996,   23.1640,   24.1538,  ...,    4.3393,  -83.7842,
+           -102.0877],
+          [  70.2855,  -49.0822,  -48.9905,  ...,    5.1282,   25.8632,
+            -50.2372],
+          ...,
+          [ -41.4699,   -4.4878,   47.3372,  ...,  -53.5007,   46.9488,
+             83.8419],
+          [  -6.1016,   94.5099,  -54.0519,  ...,   63.7928,   -8.4006,
+             54.7754],
+          [   3.3827,  -52.6143,  -78.2200,  ...,   66.0155,   53.0831,
+            -30.2902]],
+
+         [[  75.7303,  -93.8532,   27.7862,  ...,   68.3942,  -56.6010,
+             76.3470],
+          [ -42.1749,  -72.6995,  -18.5820,  ...,   -2.4200,    4.4076,
+            -31.2582],
+          [  65.0870,   17.5764,   32.5643,  ...,   24.9286,   53.0624,
+            -71.8375],
+          ...,
+          [  30.3730,  -23.9849, -159.0363,  ...,   67.9254,    5.4925,
+            -72.0194],
+          [ -14.1820,  164.7432,   63.2954,  ...,   77.4722,  -75.5174,
+            -42.6295],
+          [  56.2155,  -92.1620,  -46.7208,  ...,   73.7377,   73.9009,
+            -10.3970]],
+
+         [[ -18.9021, -101.6579,  -12.1926,  ...,   37.8894,  -26.1872,
+            100.1853],
+          [  75.9576,   40.9880,   39.2632,  ...,   23.8597,   30.4741,
+            -16.8539],
+          [  19.5119,  -28.9495,  105.0940,  ...,  -36.0168,   10.9887,
+            -32.5779],
+          ...,
+          [  96.3341,   44.0584,   40.0191,  ...,   40.2190,   75.4918,
+             20.3920],
+          [  53.0354,  -44.2616,  -60.0502,  ...,   16.1626,  105.5584,
+             -6.5413],
+          [  87.7673,   22.7138,  -20.2693,  ...,   15.0143,   57.2021,
+             -0.9805]],
+
+         [[ -67.8320, -156.3292,  -41.6191,  ...,  -92.0851,   33.2790,
+            -10.5568],
+          [  11.3109,    3.8694,   19.0544,  ...,  -53.6216,  -72.6351,
+             12.4263],
+          [  10.6963,  -42.7674,   17.9632,  ...,  -11.2106, -107.7717,
+              7.6322],
+          ...,
+          [  -9.7141,  -47.8090,   97.5981,  ...,   66.6475,  159.9525,
+            -18.2708],
+          [ -21.0226,  -29.6703,   53.5699,  ...,   17.9672,  -61.5370,
+            -74.2995],
+          [  -1.1461,  -28.2535,  101.0157,  ...,   66.6176,   20.8216,
+            106.1087]]]])}
+
+>>>>>>>>>>>>> Mark 2 <<<<<<<<<<<<<
+preview type: <class 'dict'>
+preview keys: dict_keys(['images'])
+preview images len: 1
+preview['images]:[{'filename': 'ComfyUI_temp_gelpp_00001_.png', 'subfolder': '', 'type': 'temp'}]
+
+>>>>>>>>>>>>> Mark 3 <<<<<<<<<<<<<
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+>>>>>>>>>>>>> Mark 4 <<<<<<<<<<<<<
+Prompt executed in 8.21 seconds
+got prompt
+
+>>>>>>>>>>>>> Mark 1 <<<<<<<<<<<<<
+>>>>>>>>>> diffusion step from GUI = 0
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 1
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 2
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 3
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 4
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 5
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 6
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 7
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 8
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 9
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+intermediate_latent type: <class 'list'>
+intermediate_latent len: 10
+intermediate_latent[0]: {'samples': tensor([[[[ 4.6522e+01,  4.0377e+01, -8.7060e+01,  ...,  6.1459e+01,
+            2.0949e+01, -1.3495e+02],
+          [-1.3831e+01,  1.5585e+01,  3.1394e+01,  ..., -1.1538e+01,
+           -9.8862e+01, -1.3442e+02],
+          [ 8.8220e+01, -6.3474e+01, -6.1520e+01,  ...,  2.0274e+01,
+            3.7839e+01, -6.4404e+01],
+          ...,
+          [-6.2354e+01,  1.2683e+01,  6.2423e+01,  ..., -6.8120e+01,
+            5.2219e+01,  1.1631e+02],
+          [-1.5802e+01,  1.1439e+02, -5.0750e+01,  ...,  7.5930e+01,
+           -1.4402e+01,  6.6490e+01],
+          [-7.5459e-02, -5.0795e+01, -8.9296e+01,  ...,  8.3252e+01,
+            4.9440e+01, -1.0557e+01]],
+
+         [[ 8.4637e+01, -1.2794e+02,  2.9719e+01,  ...,  8.2635e+01,
+           -7.5254e+01,  8.4076e+01],
+          [-5.3052e+01, -9.1233e+01, -2.6224e+01,  ..., -1.1523e+01,
+            2.1921e+01, -3.7251e+01],
+          [ 6.6743e+01,  1.0792e+00,  3.4845e+01,  ...,  4.5685e+01,
+            7.1891e+01, -8.3430e+01],
+          ...,
+          [ 3.2758e+01, -1.8400e+01, -1.8139e+02,  ...,  8.0149e+01,
+            9.8969e+00, -8.9622e+01],
+          [-9.5439e+00,  1.9353e+02,  6.3240e+01,  ...,  9.3426e+01,
+           -9.2794e+01, -4.2700e+01],
+          [ 7.4867e+01, -8.1403e+01, -6.1670e+01,  ...,  8.3773e+01,
+            7.6488e+01, -9.1390e+00]],
+
+         [[-2.4450e+01, -1.1866e+02, -9.2575e+00,  ...,  1.5609e+01,
+           -3.3497e+01,  1.2784e+02],
+          [ 8.5881e+01,  6.4317e+01,  5.4558e+01,  ...,  1.2243e+01,
+            1.8062e+01, -1.8232e+01],
+          [ 3.9538e+01, -3.6271e+01,  1.2764e+02,  ..., -3.1447e+01,
+            2.0478e+01, -3.8411e+01],
+          ...,
+          [ 1.0181e+02,  4.9213e+01,  4.1374e+01,  ...,  4.4585e+01,
+            9.2235e+01,  2.9942e+01],
+          [ 5.2962e+01, -3.5031e+01, -8.1052e+01,  ...,  1.7045e+01,
+            1.3085e+02, -1.2342e+01],
+          [ 9.9103e+01,  2.7319e+01, -1.4861e+01,  ...,  1.4743e+01,
+            5.0667e+01, -9.3123e-02]],
+
+         [[-9.7883e+01, -1.8393e+02, -4.2806e+01,  ..., -8.9170e+01,
+            4.0639e+01, -8.2559e+00],
+          [ 9.7788e-01,  1.8475e+01,  1.7857e+01,  ..., -6.3217e+01,
+           -8.4191e+01,  2.1643e+01],
+          [ 2.1778e+01, -5.4574e+01,  2.3637e+01,  ...,  1.9773e+01,
+           -1.1703e+02,  6.1290e+00],
+          ...,
+          [-1.4503e+01, -5.9128e+01,  1.1932e+02,  ...,  6.9125e+01,
+            1.9317e+02, -1.0908e+01],
+          [-2.0835e+01, -4.3772e+01,  7.0222e+01,  ...,  1.6378e+01,
+           -6.0968e+01, -8.3241e+01],
+          [ 7.6179e+00, -2.1313e+01,  1.3505e+02,  ...,  7.7956e+01,
+            3.3234e+01,  1.1834e+02]]]])}
+
+>>>>>>>>>>>>> Mark 2 <<<<<<<<<<<<<
+preview type: <class 'dict'>
+preview keys: dict_keys(['images'])
+preview images len: 1
+preview['images]:[{'filename': 'ComfyUI_temp_auctu_00001_.png', 'subfolder': '', 'type': 'temp'}]
+
+>>>>>>>>>>>>> Mark 3 <<<<<<<<<<<<<
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+>>>>>>>>>>>>> Mark 4 <<<<<<<<<<<<<
+Prompt executed in 8.19 seconds
+got prompt
+Prompt executed in 0.00 seconds
+got prompt
+Prompt executed in 0.00 seconds
+got prompt
+
+>>>>>>>>>>>>> Mark 1 <<<<<<<<<<<<<
+>>>>>>>>>> diffusion step from GUI = 0
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 1
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 2
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 3
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 4
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 5
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 6
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 7
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 8
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 9
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+intermediate_latent type: <class 'list'>
+intermediate_latent len: 10
+intermediate_latent[0]: {'samples': tensor([[[[  24.9094,   22.7116,  -73.3090,  ...,   56.9530,    7.3268,
+            -97.5152],
+          [   3.5088,   26.1971,   24.3588,  ...,    7.8476,  -73.2126,
+            -91.3563],
+          [  63.2949,  -45.1629,  -41.5492,  ...,    4.2748,   21.9624,
+            -45.7874],
+          ...,
+          [ -31.9747,   -6.9501,   42.6807,  ...,  -52.5415,   44.4528,
+             72.2938],
+          [  -1.4189,   89.3628,  -60.2193,  ...,   55.6526,   -4.7652,
+             49.5010],
+          [   5.2575,  -47.8899,  -80.6144,  ...,   62.0593,   57.0829,
+            -36.1263]],
+
+         [[  72.6718,  -84.9103,   26.6758,  ...,   64.5565,  -52.8844,
+             71.7961],
+          [ -40.7441,  -71.9123,  -21.3718,  ...,   -5.1117,    6.9520,
+            -30.2256],
+          [  64.3470,   15.8959,   32.8611,  ...,   17.4159,   46.7562,
+            -66.3528],
+          ...,
+          [  28.9671,  -17.8518, -144.5553,  ...,   61.8157,    4.1570,
+            -64.8441],
+          [ -17.8026,  149.1905,   56.2138,  ...,   68.5297,  -68.8441,
+            -41.7449],
+          [  49.5226,  -95.2404,  -63.2634,  ...,   67.1007,   72.1989,
+            -10.1515]],
+
+         [[ -17.8505,  -94.2977,  -14.0631,  ...,   37.3368,  -22.0283,
+             89.9081],
+          [  75.7981,   37.8735,   33.9613,  ...,   21.9233,   33.7505,
+            -15.7943],
+          [  18.7341,  -24.5184,   94.8757,  ...,  -29.7007,   11.2287,
+            -30.2924],
+          ...,
+          [  92.8899,   37.2364,   39.8703,  ...,   36.5890,   68.1800,
+             17.6349],
+          [  52.0112,  -41.0573,  -47.7117,  ...,   13.6417,   93.4168,
+             -4.1891],
+          [  84.3167,   22.7523,  -14.8933,  ...,   13.0415,   56.4667,
+             -1.4039]],
+
+         [[ -57.4762, -142.3674,  -40.1961,  ...,  -87.0782,   31.1303,
+            -11.4158],
+          [  10.1274,    3.8900,   21.3406,  ...,  -50.3810,  -67.3815,
+              9.2324],
+          [  10.1311,  -38.3987,   12.1793,  ...,  -13.1324, -100.9701,
+              7.2516],
+          ...,
+          [  -8.0481,  -46.3492,   87.3877,  ...,   64.8791,  144.4649,
+            -20.2741],
+          [ -19.4266,  -21.4689,   49.8817,  ...,   21.6452,  -63.0573,
+            -70.8861],
+          [  -1.8594,  -25.6147,   99.8456,  ...,   66.7570,   18.0729,
+             99.4279]]]])}
+
+>>>>>>>>>>>>> Mark 2 <<<<<<<<<<<<<
+preview type: <class 'dict'>
+preview keys: dict_keys(['images'])
+preview images len: 1
+preview['images]:[{'filename': 'ComfyUI_temp_csjki_00001_.png', 'subfolder': '', 'type': 'temp'}]
+
+>>>>>>>>>>>>> Mark 3 <<<<<<<<<<<<<
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+>>>>>>>>>>>>> Mark 4 <<<<<<<<<<<<<
+Prompt executed in 8.15 seconds
+got prompt
+
+>>>>>>>>>>>>> Mark 1 <<<<<<<<<<<<<
+>>>>>>>>>> diffusion step from GUI = 0
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 1
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 2
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 3
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 4
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 5
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 6
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 7
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 8
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 9
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+intermediate_latent type: <class 'list'>
+intermediate_latent len: 10
+intermediate_latent[0]: {'samples': tensor([[[[  37.3712,   32.3116,  -81.2278,  ...,   56.5255,   16.0225,
+           -118.2230],
+          [  -1.0293,   21.0081,   27.2007,  ...,   -2.8113,  -90.1082,
+           -112.4995],
+          [  78.7533,  -53.4787,  -53.1964,  ...,   10.5336,   29.4701,
+            -54.7291],
+          ...,
+          [ -49.5086,    2.5141,   53.2045,  ...,  -57.2110,   48.9362,
+             95.2644],
+          [  -8.8641,  101.5640,  -52.1652,  ...,   70.1545,  -10.7211,
+             59.6640],
+          [   1.9810,  -53.0122,  -85.4730,  ...,   71.7219,   50.8152,
+            -24.0415]],
+
+         [[  78.5199, -103.9847,   29.1585,  ...,   72.8223,  -62.4599,
+             79.5793],
+          [ -44.9776,  -79.0677,  -20.4766,  ...,   -5.4005,    9.1435,
+            -33.1348],
+          [  69.0212,   12.5874,   33.5906,  ...,   34.6755,   58.8272,
+            -76.7552],
+          ...,
+          [  30.6487,  -22.9508, -168.1624,  ...,   72.9917,    7.2175,
+            -78.8718],
+          [ -12.8482,  174.0145,   63.7930,  ...,   83.6392,  -81.3732,
+            -42.2767],
+          [  62.7455,  -89.0761,  -54.1981,  ...,   79.2352,   75.7607,
+            -10.3501]],
+
+         [[ -21.2645, -107.6949,  -11.0950,  ...,   31.0820,  -30.4231,
+            110.2191],
+          [  76.2188,   47.3481,   44.8686,  ...,   19.6770,   23.5899,
+            -17.7865],
+          [  30.7019,  -28.8404,  113.5594,  ...,  -39.2253,   10.2006,
+            -34.5120],
+          ...,
+          [  97.5237,   47.7819,   41.7605,  ...,   42.5232,   81.1098,
+             23.7467],
+          [  53.2229,  -41.9538,  -67.9537,  ...,   17.7035,  114.6668,
+             -9.1263],
+          [  91.9904,   23.8541,  -14.0269,  ...,   15.1588,   55.8690,
+             -0.4132]],
+
+         [[ -77.5920, -166.3926,  -42.5289,  ...,  -93.1418,   36.1660,
+             -9.6370],
+          [  12.9593,    6.8407,   19.1699,  ...,  -57.3058,  -78.7987,
+             15.4863],
+          [  18.0989,  -46.8921,   20.4869,  ...,    1.1648, -114.8458,
+              7.5931],
+          ...,
+          [ -11.0217,  -51.4158,  106.7691,  ...,   67.9113,  172.1326,
+            -15.9373],
+          [ -19.8288,  -36.4317,   58.9124,  ...,   16.8325,  -61.6046,
+            -77.7392],
+          [   2.4779,  -27.0460,  111.2451,  ...,   70.1279,   23.7825,
+            111.4708]]]])}
+
+>>>>>>>>>>>>> Mark 2 <<<<<<<<<<<<<
+preview type: <class 'dict'>
+preview keys: dict_keys(['images'])
+preview images len: 1
+preview['images]:[{'filename': 'ComfyUI_temp_phnga_00001_.png', 'subfolder': '', 'type': 'temp'}]
+
+>>>>>>>>>>>>> Mark 3 <<<<<<<<<<<<<
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+>>>>>>>>>>>>> Mark 4 <<<<<<<<<<<<<
+Prompt executed in 8.10 seconds
+got prompt
+
+>>>>>>>>>>>>> Mark 1 <<<<<<<<<<<<<
+>>>>>>>>>> diffusion step from GUI = 0
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 1
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 2
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 3
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 4
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 5
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 6
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 7
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 8
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 9
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+intermediate_latent type: <class 'list'>
+intermediate_latent len: 10
+intermediate_latent[0]: {'samples': tensor([[[[  37.0697,   32.3215,  -81.1779,  ...,   56.6157,   16.1584,
+           -117.8434],
+          [  -0.9484,   21.0685,   27.0516,  ...,   -2.7120,  -90.5301,
+           -112.3981],
+          [  78.4184,  -53.4860,  -53.1768,  ...,   10.2446,   29.3897,
+            -54.6681],
+          ...,
+          [ -49.7155,    2.4785,   53.1700,  ...,  -57.1530,   49.0014,
+             95.1491],
+          [  -8.8213,  101.7903,  -52.0293,  ...,   69.9770,  -10.7152,
+             59.8961],
+          [   2.1386,  -53.1937,  -85.3179,  ...,   71.4039,   50.9705,
+            -24.1044]],
+
+         [[  78.6284, -104.3832,   29.1248,  ...,   72.7749,  -62.2983,
+             79.6136],
+          [ -44.9437,  -78.8706,  -20.4711,  ...,   -5.3870,    9.1128,
+            -33.2269],
+          [  68.7978,   12.7915,   33.5820,  ...,   34.6501,   59.0148,
+            -76.8308],
+          ...,
+          [  30.8837,  -22.8915, -167.8128,  ...,   72.9371,    7.4076,
+            -78.8135],
+          [ -12.9855,  174.1662,   63.7871,  ...,   83.5817,  -81.3144,
+            -42.2215],
+          [  62.4294,  -89.5406,  -54.0358,  ...,   78.9974,   75.8194,
+            -10.4555]],
+
+         [[ -21.1768, -107.7628,  -11.2638,  ...,   30.8365,  -30.3971,
+            110.1207],
+          [  76.2049,   47.5887,   44.8156,  ...,   19.6151,   23.6410,
+            -17.9086],
+          [  30.3917,  -29.2575,  113.4721,  ...,  -39.2696,   10.2597,
+            -34.4866],
+          ...,
+          [  97.7434,   47.7781,   41.7504,  ...,   42.6073,   81.3499,
+             23.7143],
+          [  53.2516,  -41.9835,  -67.8894,  ...,   17.6142,  114.8753,
+             -9.1185],
+          [  92.0684,   23.9478,  -14.2871,  ...,   15.1568,   55.9077,
+             -0.4815]],
+
+         [[ -77.5024, -166.2946,  -42.4753,  ...,  -93.1314,   36.1990,
+             -9.7381],
+          [  12.8571,    6.9144,   19.2489,  ...,  -57.2055,  -78.7601,
+             15.4357],
+          [  17.6788,  -46.8454,   20.7393,  ...,    1.1331, -115.0881,
+              7.5858],
+          ...,
+          [ -10.8882,  -51.3790,  106.4529,  ...,   67.9224,  172.0413,
+            -15.8318],
+          [ -19.8868,  -36.1269,   59.1120,  ...,   16.7715,  -61.5114,
+            -77.6913],
+          [   2.5579,  -26.8518,  111.1730,  ...,   70.0726,   23.9012,
+            111.4456]]]])}
+
+>>>>>>>>>>>>> Mark 2 <<<<<<<<<<<<<
+preview type: <class 'dict'>
+preview keys: dict_keys(['images'])
+preview images len: 1
+preview['images]:[{'filename': 'ComfyUI_temp_pcekp_00001_.png', 'subfolder': '', 'type': 'temp'}]
+
+>>>>>>>>>>>>> Mark 3 <<<<<<<<<<<<<
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+>>>>>>>>>>>>> Mark 4 <<<<<<<<<<<<<
+Prompt executed in 8.13 seconds
+got prompt
+
+>>>>>>>>>>>>> Mark 1 <<<<<<<<<<<<<
+>>>>>>>>>> diffusion step from GUI = 0
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 1
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 2
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 3
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 4
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 5
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 6
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 7
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 8
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+>>>>>>>>>> diffusion step from GUI = 9
+sampler_name = dpmpp_2s_ancestral_test
+
+samples type: <class 'dict'>
+samples keys: dict_keys(['samples'])
+samples shape: torch.Size([1, 4, 64, 64])
+
+
+intermediate_latent type: <class 'list'>
+intermediate_latent len: 10
+intermediate_latent[0]: {'samples': tensor([[[[  23.2993,   17.7065,  -40.2547,  ...,   30.2015,   11.4103,
+            -66.9251],
+          [ -15.5192,   14.0223,   21.0269,  ...,    6.0070,  -58.8191,
+            -71.3323],
+          [  53.1790,  -20.6924,  -29.8776,  ...,   19.2463,   23.8700,
+            -34.5999],
+          ...,
+          [ -35.4521,   -1.8286,   34.1192,  ...,  -37.7968,   20.7305,
+             71.0970],
+          [  -7.6275,   60.8718,  -27.7267,  ...,   40.9120,   -9.5067,
+             38.8278],
+          [   4.8976,  -27.6298,  -48.5995,  ...,   52.9200,   43.3918,
+             -1.9151]],
+
+         [[  43.8345,  -79.4253,   21.3562,  ...,   38.0077,  -43.4321,
+             44.8583],
+          [ -35.9260,  -64.3964,   -8.5791,  ...,   -6.4404,   14.3355,
+            -31.1899],
+          [  34.1068,   -6.9937,   32.3116,  ...,   11.4363,   39.2764,
+            -57.2211],
+          ...,
+          [  22.4245,  -32.1626, -116.5224,  ...,   45.7354,   -9.5667,
+            -44.4033],
+          [  -8.9806,  107.6289,   48.5333,  ...,   57.0929,  -55.0445,
+            -27.8716],
+          [  42.5791,  -53.9800,  -34.1021,  ...,   26.5165,   36.5784,
+             -2.3189]],
+
+         [[ -24.4121,  -56.6231,    1.2866,  ...,   -4.0082,  -21.7547,
+             74.1831],
+          [  40.7390,   47.0842,   55.5998,  ...,   23.7789,    9.7149,
+             -8.4088],
+          [  28.4397,    5.8048,   99.4122,  ...,  -22.5595,   23.2001,
+            -17.5565],
+          ...,
+          [  62.6792,   47.9521,   20.4250,  ...,   15.5918,   67.1380,
+             18.7696],
+          [  30.1914,  -19.6610,  -41.4155,  ...,   19.9298,   83.4291,
+              0.3416],
+          [  60.7140,   20.8852,   -7.7606,  ...,   19.4863,   33.0684,
+              2.2593]],
+
+         [[ -62.0757, -110.3343,  -21.1596,  ...,  -62.0098,   22.0312,
+             -5.7483],
+          [ -14.9738,  -18.2097,   15.7251,  ...,  -46.0850,  -58.2748,
+             10.1545],
+          [  14.8945,  -31.4636,   19.3047,  ...,   -4.3048,  -61.0053,
+              1.0829],
+          ...,
+          [ -10.1272,  -45.5309,   72.3840,  ...,    1.6136,  108.2197,
+            -11.1929],
+          [ -17.5262,  -27.9936,   31.9458,  ...,  -28.3285,  -33.7942,
+            -49.0350],
+          [   3.5088,  -10.5285,   72.3800,  ...,   61.1856,   34.7678,
+             63.9418]]]])}
+
+>>>>>>>>>>>>> Mark 2 <<<<<<<<<<<<<
+preview type: <class 'dict'>
+preview keys: dict_keys(['images'])
+preview images len: 1
+preview['images]:[{'filename': 'ComfyUI_temp_jqazn_00001_.png', 'subfolder': '', 'type': 'temp'}]
+
+>>>>>>>>>>>>> Mark 3 <<<<<<<<<<<<<
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+image type: <class 'torch.Tensor'>
+image shape: torch.Size([512, 512, 3])
+i type: <class 'numpy.ndarray'>
+i shape: (512, 512, 3)
+Saved image size: (512, 512)
+>>>>>>>>>>>>> Mark 4 <<<<<<<<<<<<<
+Prompt executed in 8.07 seconds
+
+Stopped server
