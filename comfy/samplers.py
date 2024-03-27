@@ -619,8 +619,8 @@ def sample(model, noise, positive, negative, cfg, device, sampler, sigmas, model
     apply_empty_x_to_equal_area(positive, negative, 'gligen', lambda cond_cnets, x: cond_cnets[x])
 
     extra_args = {"cond":positive, "uncond":negative, "cond_scale": cfg, "model_options": model_options, "seed":seed}
-    samples = sampler.sample(model_wrap, sigmas, extra_args, callback, noise, latent_image, denoise_mask, disable_pbar, diffusion_step=diffusion_step)     #mark
-    return model.process_latent_out(samples.to(torch.float32))
+    samples, full_lantents = sampler.sample(model_wrap, sigmas, extra_args, callback, noise, latent_image, denoise_mask, disable_pbar, diffusion_step=diffusion_step)     #mark
+    return model.process_latent_out(samples.to(torch.float32)), full_lantents
 
 SCHEDULER_NAMES = ["normal", "karras", "exponential", "sgm_uniform", "simple", "ddim_uniform"]
 SAMPLER_NAMES = KSAMPLER_NAMES + ["ddim", "uni_pc", "uni_pc_bh2"]
@@ -694,7 +694,7 @@ class KSampler:
             sigmas = self.calculate_sigmas(new_steps).to(self.device)
             self.sigmas = sigmas[-(steps + 1):]
 
-    def sample(self, noise, positive, negative, cfg, latent_image=None, start_step=None, last_step=None, force_full_denoise=False, denoise_mask=None, sigmas=None, callback=None, disable_pbar=False, seed=None, diffusion_step=None):
+    def sample(self, noise, positive, negative, cfg, latent_image=None, start_step=None, last_step=None, force_full_denoise=False, denoise_mask=None, sigmas=None, callback=None, disable_pbar=False, seed=None):
         if sigmas is None:
             sigmas = self.sigmas
 
