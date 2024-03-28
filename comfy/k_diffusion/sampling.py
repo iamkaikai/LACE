@@ -128,24 +128,29 @@ def sample_euler_test(model, x, sigmas, extra_args=None, callback=None, disable=
     
     extra_args = {} if extra_args is None else extra_args
     s_in = x.new_ones([x.shape[0]])
-    print(f'>>>>>>>>>> recieved diffusion_step = {diffusion_step}')
+    print(f'>>>>>>>>>> recieved diffusion_step in euler_test = {diffusion_step}')
+    print(f'>>>>>>>>>> sigmas = {sigmas}')
+    
+    list_of_x = []
     for i, sigma in enumerate(sigmas[:-1], start=0):  # Enumerate over sigmas
         gamma = min(s_churn / (len(sigmas) - 1), 2 ** 0.5 - 1) if s_tmin <= sigma <= s_tmax else 0.
         sigma_hat = sigma * (gamma + 1)
         if gamma > 0:
-            eps = torch.randn_like(x) * s_noise
-            x = x + eps * (sigma_hat ** 2 - sigma ** 2) ** 0.5
-        denoised = model(x, sigma_hat * s_in, **extra_args)
-        d = to_d(x, sigma_hat, denoised)
+            eps = torch.randn_like(x) * s_noise                 # add random noise
+            x = x + eps * (sigma_hat ** 2 - sigma ** 2) ** 0.5  # add noise to the input
+        denoised = model(x, sigma_hat * s_in, **extra_args)     # denoised prediction
+        d = to_d(x, sigma_hat, denoised)                        # denoising direction
         if callback is not None:
             callback({'x': x, 'i': i, 'sigma': sigma, 'sigma_hat': sigma_hat, 'denoised': denoised})
         dt = sigmas[i + 1] - sigma_hat
         x = x + d * dt
-
+        
         # Check if current iteration matches the return_step
         if diffusion_step is not None and i == diffusion_step:
-            return x
-    return x
+            return x, list_of_x
+        list_of_x.append(x.detach().clone())
+        # exit loop
+    return x, list_of_x
 
 def sample_euler(model, x, sigmas, extra_args=None, callback=None, disable=None, s_churn=0., s_tmin=0., s_tmax=float('inf'), s_noise=1.):
     """Implements Algorithm 2 (Euler steps) from Karras et al. (2022)."""

@@ -264,6 +264,7 @@ class VAEDecode:
     CATEGORY = "latent"
 
     def decode(self, vae, samples):
+        print("VAEDecode!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         return (vae.decode(samples["samples"]), )
 
 class VAEDecodeTiled:
@@ -1269,12 +1270,6 @@ def common_ksampler(model, seed, steps, cfg, sampler_name, scheduler, positive, 
     disable_pbar = not comfy.utils.PROGRESS_BAR_ENABLED
     
     ############## add arg #############
-    print("bbbbbbbbbbbbbbbbbbbbbbbbb")
-    print(comfy.sample.sample(model, noise, steps, cfg, sampler_name, scheduler, positive, negative, latent_image,
-                                  denoise=denoise, disable_noise=disable_noise, start_step=start_step, last_step=last_step,
-                                  force_full_denoise=force_full_denoise, noise_mask=noise_mask, callback=callback, disable_pbar=disable_pbar, seed=seed, diffusion_step=diffusion_step)
-                                  )
-    print("cccccccccccccccccccccccccc")
     samples, full_lantents = comfy.sample.sample(model, noise, steps, cfg, sampler_name, scheduler, positive, negative, latent_image,
                                   denoise=denoise, disable_noise=disable_noise, start_step=start_step, last_step=last_step,
                                   force_full_denoise=force_full_denoise, noise_mask=noise_mask, callback=callback, disable_pbar=disable_pbar, seed=seed, diffusion_step=diffusion_step)
@@ -1308,7 +1303,8 @@ class KSampler:
 
     ############## add arg #############
     def sample(self, model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent_image, denoise=1.0, diffusion_step=None):
-        return common_ksampler(model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent_image, denoise=denoise, diffusion_step=diffusion_step)
+        samples, full_lantents = common_ksampler(model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent_image, denoise=denoise, diffusion_step=diffusion_step)
+        return samples, full_lantents
 
 class KSamplerAdvanced:
 

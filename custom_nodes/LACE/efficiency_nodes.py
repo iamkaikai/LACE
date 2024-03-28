@@ -417,29 +417,30 @@ class VAEDecodeLACE:
         self.compress_level = 1
 
     def decode(self, vae, latents_list, tile_size):
-        print(">>>>>>>>>>>>> Mark 3 <<<<<<<<<<<<<")
+        print(">>>>>>>>>>>>> Mark VAEDecodeLACE <<<<<<<<<<<<<")
         results = []
+        print(f'latents_list len: {len(latents_list)}')
         
         for idx, latents in enumerate(latents_list):
-            image = vae.decode(latents["samples"])
+            image = vae.decode(latents)
             image = image.squeeze(0)
-            print(f"image type: {type(image)}\nimage shape: {image.shape}")
-            i = 255. * image.cpu().numpy()
-            print(f"i type: {type(i)}\ni shape: {i.shape}")
-            
-            img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
-            full_output_folder, filename, counter, subfolder, filename_prefix = folder_paths.get_save_image_path(self.filename_prefix, self.output_dir, tile_size, tile_size)
-            file = f"{filename}_{idx:05}_.png"
-            img.save(os.path.join(full_output_folder, file))
-            print(f"Saved image size: {img.size}")  # Correct place to print image size
-            
-            results.append({
-                "filename": file,
-                "subfolder": subfolder,
-                "type": self.type
-            })
-        
-        print(">>>>>>>>>>>>> Mark 4 <<<<<<<<<<<<<")
+            if image.dim() == 3 and image.size(0) in {1, 3}:
+                image = image.cpu().detach()
+                if image.size(0) == 1:
+                    # Convert single channel image to RGB
+                    image = image.expand(3, image.size(1), image.size(2))
+                i = (255. * image).numpy().astype(np.uint8)
+                img = Image.fromarray(i.transpose(1, 2, 0))
+                filename = f"{self.filename_prefix}_{idx:05}.png"
+                file_path = os.path.join(self.output_dir, filename)
+                img.save(file_path, compress_level=self.compress_level)
+                results.append({
+                    "filename": filename,
+                    "subfolder": self.output_dir,
+                    "type": self.type
+                })
+
+        # return {"ui": preview, "result": results}       
         return {"ui": {"images": results}}
         
 
@@ -478,12 +479,13 @@ class TSC_KSampler:
     CATEGORY = "LACE/Sampling"
 
     def sample(self, model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent_image,
-               preview_method, vae_decode, denoise=1.0, diffusion_step=20, prompt=None, extra_pnginfo=None, my_unique_id=None,
+               preview_method, vae_decode, denoise=1.0, diffusion_step=30, prompt=None, extra_pnginfo=None, my_unique_id=None,
                optional_vae=(None,), script=None, add_noise=None, start_at_step=None, end_at_step=None,
                return_with_leftover_noise=None, sampler_type="regular"):
 
         # Rename the vae variable
         vae = optional_vae
+        
         # If vae is not connected, disable vae decoding
         if vae == (None,) and vae_decode != "false":
             print(f"{warning('KSampler(Efficient) Warning:')} No vae input detected, proceeding as if vae_decode was false.\n")
@@ -518,8 +520,8 @@ class TSC_KSampler:
             original_prepare_noise = comfy.sample.prepare_noise
             original_KSampler = comfy.samplers.KSampler
             original_model_str = str(model)
-            intermediate_latent = []
-
+            full_latents = []
+            print("enter process_latent_image() <<<<<<<<<<<<<<<<<<<")
             # Initialize output variables
             samples = images = gifs = preview = cnet_imgs = None
 
@@ -572,12 +574,14 @@ class TSC_KSampler:
 
                 # Load previous latent if all parameters match, else returns 'None'
                 samples = load_ksampler_results("latent", my_unique_id, parameters)
-
+                samples = None  # Add this line to force new sampling every time   <<<<<<<<<<<<<<<<<<<<<<<<<<<
+                
                 if samples is None: # clear stored images
                     store_ksampler_results("image", my_unique_id, None)
                     store_ksampler_results("cnet_img", my_unique_id, None)
 
                 if samples is not None: # do not re-sample
+                    print('samples is not None!!!!!!!!!!!!!!!!!!!!!!!!')
                     images = load_ksampler_results("image", my_unique_id)
                     cnet_imgs = True # "True" will denote that it can be loaded provided the preprocessor matches
 
@@ -586,16 +590,17 @@ class TSC_KSampler:
                     # samples = KSampler().sample(model, seed, steps, cfg, sampler_name, scheduler, positive, negative,
                     #                                         latent_image, denoise=denoise)[0] if denoise>0 else latent_image 
                     ######################################### LACE KSampler #########################################
-                    for step in range(diffusion_step):
-                        print("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-                        samples, full_latent = KSampler().sample(model, seed, steps, cfg, sampler_name, scheduler, positive, negative,
-                                                            latent_image, denoise=denoise, diffusion_step=step)[0] if denoise>0 else latent_image
-                        print('ffffffffffffffffffffffffffffffffffff')
-                        print(f"samples type: {type(samples)}\nsamples keys: {samples.keys()}\nsamples shape: {samples['samples'].shape}")
-                        print("\n")
-                        intermediate_latent.append(samples)
-                    print(f"intermediate_latent type: {type(intermediate_latent)}\nintermediate_latent len: {len(intermediate_latent)}")
-                    print(f"intermediate_latent[0]: {intermediate_latent[0]}")
+                    # for step in range(diffusion_step):
+                    results = KSampler().sample(model, seed, steps, cfg, sampler_name, scheduler, positive, negative,
+                                    latent_image, denoise=denoise, diffusion_step=diffusion_step) if denoise>0 else latent_image
+                    samples = results[0]
+                    full_latents = results[1]
+                    print('ffffffffffffffffffffffffffffffffffff 1')
+                    print(f"samples: {len(samples)}")
+                    print(f"full_lantents: {len(full_latents) if full_latents else 0}")
+                    print('ffffffffffffffffffffffffffffffffffff 2')
+                    print("\n")
+                    # intermediate_latent.append(samples)
                     ######################################### LACE KSampler #########################################
                 elif sampler_type == "advanced":
                     samples = KSamplerAdvanced().sample(model, add_noise, seed, steps, cfg, sampler_name, scheduler,
@@ -715,7 +720,7 @@ class TSC_KSampler:
                 # Decode image if not yet decoded
                 if "true" in vae_decode:
                     if images is None:
-                        images = vae_decode_latent(vae, samples, vae_decode)
+                        images = vae_decode_latent(vae, samples[0], vae_decode)
                         # Store decoded image as base image of no script is detected
                         if all(not keys_exist_in_script(key) for key in ["xyplot", "hiresfix", "tile", "anim"]):
                             store_ksampler_results("image", my_unique_id, images)
@@ -750,7 +755,7 @@ class TSC_KSampler:
                 comfy.samplers.KSampler = original_KSampler
                 comfy.sample.prepare_noise = original_prepare_noise
 
-            return samples, images, gifs, preview, intermediate_latent
+            return samples, images, gifs, preview, full_latents
        
         # ---------------------------------------------------------------------------------------------------------------
         # Clean globally stored objects of non-existant nodes
@@ -776,7 +781,6 @@ class TSC_KSampler:
             if preview is None:
                 return {"result": result}
             else:
-                print(f"preview type: {type(preview)}\npreview keys: {preview.keys()}\npreview images len: {len(preview['images'])}\npreview['images]:{preview['images']}\n")
                 return {"ui": preview, "result": result}
              
         # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
