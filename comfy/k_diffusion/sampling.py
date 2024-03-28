@@ -144,12 +144,12 @@ def sample_euler_test(model, x, sigmas, extra_args=None, callback=None, disable=
             callback({'x': x, 'i': i, 'sigma': sigma, 'sigma_hat': sigma_hat, 'denoised': denoised})
         dt = sigmas[i + 1] - sigma_hat
         x = x + d * dt
+        list_of_x.append(x.detach().clone())
         
         # Check if current iteration matches the return_step
         if diffusion_step is not None and i == diffusion_step:
             return x, list_of_x
-        list_of_x.append(x.detach().clone())
-        # exit loop
+    
     return x, list_of_x
 
 def sample_euler(model, x, sigmas, extra_args=None, callback=None, disable=None, s_churn=0., s_tmin=0., s_tmax=float('inf'), s_noise=1.):

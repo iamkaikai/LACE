@@ -8,6 +8,7 @@ from PIL.PngImagePlugin import PngInfo
 import numpy as np
 import torch
 import torchvision
+import random
 
 import ast
 from pathlib import Path
@@ -395,7 +396,7 @@ class TSC_Apply_ControlNet_Stack:
 
 ########################################################################################################################
 # TSC Process Decoder (Efficient)
-import random
+
 class VAEDecodeLACE:
     @classmethod
     def INPUT_TYPES(s):
@@ -415,32 +416,48 @@ class VAEDecodeLACE:
         self.type = "temp"
         self.filename_prefix = "_temp_" + ''.join(random.choice("abcdefghijklmnopqrstupvxyz") for x in range(5))
         self.compress_level = 1
+        print(f"Output Directory: {self.output_dir}")
 
     def decode(self, vae, latents_list, tile_size):
-        print(">>>>>>>>>>>>> Mark VAEDecodeLACE <<<<<<<<<<<<<")
+        print("\n>>>>>>>>>>>>> Mark VAEDecodeLACE <<<<<<<<<<<<<")
         results = []
         print(f'latents_list len: {len(latents_list)}')
         
         for idx, latents in enumerate(latents_list):
-            image = vae.decode(latents)
-            image = image.squeeze(0)
-            if image.dim() == 3 and image.size(0) in {1, 3}:
-                image = image.cpu().detach()
-                if image.size(0) == 1:
-                    # Convert single channel image to RGB
-                    image = image.expand(3, image.size(1), image.size(2))
-                i = (255. * image).numpy().astype(np.uint8)
-                img = Image.fromarray(i.transpose(1, 2, 0))
-                filename = f"{self.filename_prefix}_{idx:05}.png"
+            
+            print(f"samples tensor shape: {latents[0]['samples'].shape}")
+
+            imgs = VAEDecode().decode(vae, latents[0])[0]
+            batch_images = imgs.shape[0]
+            print(f'batch_images: {batch_images}')
+            print(f'imgs[0]: {imgs[0]}')
+            print(f'imgs[1]: {imgs[1]}')
+            # preview = PreviewImage().save_images(img, prompt=None)["ui"]         
+            print("\n>>>>>>>>>>>>> Mark v <<<<<<<<<<<<<")
+
+            for i in range(batch_images):
+                               
+                # Remove the batch dimension
+                img = imgs[i].squeeze(0)
+                img = img.cpu().detach()
+                
+                # Resize the image to the desired tile_size
+                img_pil = Image.fromarray((255. * img).numpy().astype(np.uint8))
+                resized_img = img_pil.resize((tile_size, tile_size), Image.Resampling.LANCZOS)
+                
+                # Save the resized image
+                filename = f"{self.filename_prefix}_{i}_{idx:05}.png"
                 file_path = os.path.join(self.output_dir, filename)
-                img.save(file_path, compress_level=self.compress_level)
+                resized_img.save(file_path, compress_level=self.compress_level)
+                
                 results.append({
                     "filename": filename,
                     "subfolder": self.output_dir,
                     "type": self.type
                 })
 
-        # return {"ui": preview, "result": results}       
+        print("-----------------------------------------")
+        # return {"ui": preview}       
         return {"ui": {"images": results}}
         
 
@@ -465,7 +482,8 @@ class TSC_KSampler:
                      "denoise": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01}),
                      "preview_method": (["auto", "latent2rgb", "taesd", "vae_decoded_only", "none"],),
                      "vae_decode": (["true", "true (tiled)", "false"],),
-                     "diffusion_step": ("INT", {"default": 20, "min": 1, "max": 1000}),
+                     "LACE_step": ("INT", {"default": 20, "min": 1, "max": 1000}),
+                     "LACE_Range": ("INT", {"default": 3, "min": 0, "max": 10}),
                      },
                 "optional": { "optional_vae": ("VAE",),
                               "script": ("SCRIPT",),},
@@ -479,9 +497,9 @@ class TSC_KSampler:
     CATEGORY = "LACE/Sampling"
 
     def sample(self, model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent_image,
-               preview_method, vae_decode, denoise=1.0, diffusion_step=30, prompt=None, extra_pnginfo=None, my_unique_id=None,
+               preview_method, vae_decode, denoise=1.0, LACE_step =30, prompt=None, extra_pnginfo=None, my_unique_id=None,
                optional_vae=(None,), script=None, add_noise=None, start_at_step=None, end_at_step=None,
-               return_with_leftover_noise=None, sampler_type="regular"):
+               return_with_leftover_noise=None, sampler_type="regular", LACE_Range=0):
 
         # Rename the vae variable
         vae = optional_vae
@@ -520,7 +538,8 @@ class TSC_KSampler:
             original_prepare_noise = comfy.sample.prepare_noise
             original_KSampler = comfy.samplers.KSampler
             original_model_str = str(model)
-            full_latents = []
+            # full_latents = []
+            intermediate_latent = []
             print("enter process_latent_image() <<<<<<<<<<<<<<<<<<<")
             # Initialize output variables
             samples = images = gifs = preview = cnet_imgs = None
@@ -590,17 +609,17 @@ class TSC_KSampler:
                     # samples = KSampler().sample(model, seed, steps, cfg, sampler_name, scheduler, positive, negative,
                     #                                         latent_image, denoise=denoise)[0] if denoise>0 else latent_image 
                     ######################################### LACE KSampler #########################################
-                    # for step in range(diffusion_step):
-                    results = KSampler().sample(model, seed, steps, cfg, sampler_name, scheduler, positive, negative,
-                                    latent_image, denoise=denoise, diffusion_step=diffusion_step) if denoise>0 else latent_image
-                    samples = results[0]
-                    full_latents = results[1]
-                    print('ffffffffffffffffffffffffffffffffffff 1')
-                    print(f"samples: {len(samples)}")
-                    print(f"full_lantents: {len(full_latents) if full_latents else 0}")
-                    print('ffffffffffffffffffffffffffffffffffff 2')
-                    print("\n")
-                    # intermediate_latent.append(samples)
+                    for step in range(LACE_step - LACE_Range, LACE_step + LACE_Range + 1):
+                        results = KSampler().sample(model, seed, steps, cfg, sampler_name, scheduler, positive, negative,
+                                    latent_image, denoise=denoise, diffusion_step=step) if denoise>0 else latent_image
+                        samples = results[0]
+                        # full_latents = results[1]
+                        # print('ffffffffffffffffffffffffffffffffffff 1')
+                        # print(f"samples: {len(samples)}")
+                        # print(f"full_lantents: {len(full_latents) if full_latents else 0}")
+                        print('ffffffffffffffffffffffffffffffffffff 2')
+                        print("\n")
+                        intermediate_latent.append(samples)
                     ######################################### LACE KSampler #########################################
                 elif sampler_type == "advanced":
                     samples = KSamplerAdvanced().sample(model, add_noise, seed, steps, cfg, sampler_name, scheduler,
@@ -720,11 +739,13 @@ class TSC_KSampler:
                 # Decode image if not yet decoded
                 if "true" in vae_decode:
                     if images is None:
+                        print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
                         images = vae_decode_latent(vae, samples[0], vae_decode)
                         # Store decoded image as base image of no script is detected
                         if all(not keys_exist_in_script(key) for key in ["xyplot", "hiresfix", "tile", "anim"]):
                             store_ksampler_results("image", my_unique_id, images)
 
+                        print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
                 # Append Control Net Images (if exist)
                 if cnet_imgs is not None and not True:
                     if preprocessor_imgs and upscale_type == "latent":
@@ -755,7 +776,7 @@ class TSC_KSampler:
                 comfy.samplers.KSampler = original_KSampler
                 comfy.sample.prepare_noise = original_prepare_noise
 
-            return samples, images, gifs, preview, full_latents
+            return samples, images, gifs, preview, intermediate_latent
        
         # ---------------------------------------------------------------------------------------------------------------
         # Clean globally stored objects of non-existant nodes
@@ -770,12 +791,11 @@ class TSC_KSampler:
                                             positive, negative, latent_image, denoise, sampler_type, add_noise,
                                             start_at_step, end_at_step, return_with_leftover_noise, refiner_model,
                                             refiner_positive, refiner_negative, vae, vae_decode, preview_method)
-
             if sampler_type == "sdxl":
                 result = (sdxl_tuple, samples, vae, images, full_latent)
             else:
                 result = (model, positive, negative, samples, vae, images, full_latent)
-            
+
             print("\n>>>>>>>>>>>>> Mark 2 <<<<<<<<<<<<<")
 
             if preview is None:
@@ -2205,7 +2225,8 @@ class TSC_KSampler:
         else:
             result = (original_model, original_positive, original_negative, latent_list, optional_vae, output_images, full_latent[0])
 
-
+       
+            
         return {"ui": {"images": preview_images}, "result": result}
 
 #=======================================================================================================================

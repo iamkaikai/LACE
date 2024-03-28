@@ -620,7 +620,7 @@ def sample(model, noise, positive, negative, cfg, device, sampler, sigmas, model
 
     extra_args = {"cond":positive, "uncond":negative, "cond_scale": cfg, "model_options": model_options, "seed":seed}
     samples, full_lantents = sampler.sample(model_wrap, sigmas, extra_args, callback, noise, latent_image, denoise_mask, disable_pbar, diffusion_step=diffusion_step)     #mark
-    return model.process_latent_out(samples.to(torch.float32)), full_lantents
+    return model.process_latent_out(samples.to(torch.float32)), model.process_latent_out(full_lantents[0].to(torch.float32))
 
 SCHEDULER_NAMES = ["normal", "karras", "exponential", "sgm_uniform", "simple", "ddim_uniform"]
 SAMPLER_NAMES = KSAMPLER_NAMES + ["ddim", "uni_pc", "uni_pc_bh2"]
