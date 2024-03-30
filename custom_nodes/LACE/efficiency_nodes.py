@@ -429,9 +429,9 @@ class VAEDecodeLACE:
 
             imgs = VAEDecode().decode(vae, latents[0])[0]
             batch_images = imgs.shape[0]
-            print(f'batch_images: {batch_images}')
-            print(f'imgs[0]: {imgs[0]}')
-            print(f'imgs[1]: {imgs[1]}')
+            # print(f'batch_images: {batch_images}')
+            # print(f'imgs[0]: {imgs[0]}')
+            # print(f'imgs[1]: {imgs[1]}')
             # preview = PreviewImage().save_images(img, prompt=None)["ui"]         
             print("\n>>>>>>>>>>>>> Mark v <<<<<<<<<<<<<")
 
@@ -609,16 +609,11 @@ class TSC_KSampler:
                     # samples = KSampler().sample(model, seed, steps, cfg, sampler_name, scheduler, positive, negative,
                     #                                         latent_image, denoise=denoise)[0] if denoise>0 else latent_image 
                     ######################################### LACE KSampler #########################################
-                    for step in range(LACE_step - LACE_Range, LACE_step + LACE_Range + 1):
+                    for step in range(LACE_step, LACE_step + LACE_Range + 1):
                         results = KSampler().sample(model, seed, steps, cfg, sampler_name, scheduler, positive, negative,
                                     latent_image, denoise=denoise, diffusion_step=step) if denoise>0 else latent_image
                         samples = results[0]
                         # full_latents = results[1]
-                        # print('ffffffffffffffffffffffffffffffffffff 1')
-                        # print(f"samples: {len(samples)}")
-                        # print(f"full_lantents: {len(full_latents) if full_latents else 0}")
-                        print('ffffffffffffffffffffffffffffffffffff 2')
-                        print("\n")
                         intermediate_latent.append(samples)
                     ######################################### LACE KSampler #########################################
                 elif sampler_type == "advanced":

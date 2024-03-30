@@ -559,7 +559,8 @@ def sample_dpmpp_2s_ancestral_test(model, x, sigmas, extra_args=None, callback=N
     s_in = x.new_ones([x.shape[0]])
     sigma_fn = lambda t: t.neg().exp()
     t_fn = lambda sigma: sigma.log().neg()
-
+    list_of_x = []
+    
     for i in trange(len(sigmas) - 1, disable=disable):
         denoised = model(x, sigmas[i] * s_in, **extra_args)
         sigma_down, sigma_up = get_ancestral_step(sigmas[i], sigmas[i + 1], eta=eta)
@@ -570,6 +571,7 @@ def sample_dpmpp_2s_ancestral_test(model, x, sigmas, extra_args=None, callback=N
             d = to_d(x, sigmas[i], denoised)
             dt = sigma_down - sigmas[i]
             x = x + d * dt
+            list_of_x.append(x.detach().clone())
         else:
             # DPM-Solver++(2S)
             t, t_next = t_fn(sigmas[i]), t_fn(sigma_down)
@@ -579,14 +581,15 @@ def sample_dpmpp_2s_ancestral_test(model, x, sigmas, extra_args=None, callback=N
             x_2 = (sigma_fn(s) / sigma_fn(t)) * x - (-h * r).expm1() * denoised
             denoised_2 = model(x_2, sigma_fn(s) * s_in, **extra_args)
             x = (sigma_fn(t_next) / sigma_fn(t)) * x - (-h).expm1() * denoised_2
+            list_of_x.append(x.detach().clone())
         # Noise addition
         if sigmas[i + 1] > 0:
             x = x + noise_sampler(sigmas[i], sigmas[i + 1]) * s_noise * sigma_up
 
         if diffusion_step is not None and i == diffusion_step:
-            return x
+            return x, list_of_x
 
-    return x
+    return x, list_of_x
 
 
 
