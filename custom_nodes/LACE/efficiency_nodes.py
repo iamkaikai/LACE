@@ -419,22 +419,11 @@ class VAEDecodeLACE:
         print(f"Output Directory: {self.output_dir}")
 
     def decode(self, vae, latents_list, tile_size):
-        print("\n>>>>>>>>>>>>> Mark VAEDecodeLACE <<<<<<<<<<<<<")
         results = []
-        print(f'latents_list len: {len(latents_list)}')
-        
         for idx, latents in enumerate(latents_list):
             
-            print(f"samples tensor shape: {latents[0]['samples'].shape}")
-
-            imgs = VAEDecode().decode(vae, latents[0])[0]
+            imgs = VAEDecode().decode(vae, latents)[0]
             batch_images = imgs.shape[0]
-            # print(f'batch_images: {batch_images}')
-            # print(f'imgs[0]: {imgs[0]}')
-            # print(f'imgs[1]: {imgs[1]}')
-            # preview = PreviewImage().save_images(img, prompt=None)["ui"]         
-            print("\n>>>>>>>>>>>>> Mark v <<<<<<<<<<<<<")
-
             for i in range(batch_images):
                                
                 # Remove the batch dimension
@@ -460,6 +449,10 @@ class VAEDecodeLACE:
         # return {"ui": preview}       
         return {"ui": {"images": results}}
         
+
+def read_all_args(args_dict):
+
+    print("Arguments:", args_dict)
 
 ########################################################################################################################
 # TSC KSampler (Efficient)
@@ -495,6 +488,9 @@ class TSC_KSampler:
     OUTPUT_NODE = True
     FUNCTION = "sample"
     CATEGORY = "LACE/Sampling"
+    def __init__(self):
+        self.previous_args = None
+        self.cache = False
 
     def sample(self, model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent_image,
                preview_method, vae_decode, denoise=1.0, LACE_step =30, prompt=None, extra_pnginfo=None, my_unique_id=None,
@@ -504,6 +500,9 @@ class TSC_KSampler:
         # Rename the vae variable
         vae = optional_vae
         
+        
+
+
         # If vae is not connected, disable vae decoding
         if vae == (None,) and vae_decode != "false":
             print(f"{warning('KSampler(Efficient) Warning:')} No vae input detected, proceeding as if vae_decode was false.\n")
@@ -538,9 +537,18 @@ class TSC_KSampler:
             original_prepare_noise = comfy.sample.prepare_noise
             original_KSampler = comfy.samplers.KSampler
             original_model_str = str(model)
-            # full_latents = []
             intermediate_latent = []
-            print("enter process_latent_image() <<<<<<<<<<<<<<<<<<<")
+
+            current_args = locals()
+            current_args.pop('self')  # Remove 'self' since it's not needed for comparison
+            if self.previous_args == current_args:
+                print(">>>>>>>>>>>>>>>>>>>>>>>> Arguments have changed")
+                self.cache = True
+            else:
+                print(">>>>>>>>>>>>>>>>>>>>>>>>>> Arguments remain the same or first invocation")
+                self.cache = False
+            self.previous_args = current_args
+
             # Initialize output variables
             samples = images = gifs = preview = cnet_imgs = None
 
@@ -573,6 +581,8 @@ class TSC_KSampler:
 
                 # ------------------------------------------------------------------------------------------------------
                 # Store run parameters as strings. Load previous stored samples if all parameters match.
+                if isinstance(latent_image, tuple):
+                    latent_image = latent_image[0]
                 latent_image_hash = tensor_to_hash(latent_image["samples"])
                 positive_hash = tensor_to_hash(positive[0][0])
                 negative_hash = tensor_to_hash(negative[0][0])
@@ -593,7 +603,10 @@ class TSC_KSampler:
 
                 # Load previous latent if all parameters match, else returns 'None'
                 samples = load_ksampler_results("latent", my_unique_id, parameters)
-                samples = None  # Add this line to force new sampling every time   <<<<<<<<<<<<<<<<<<<<<<<<<<<
+                
+                if self.cache:
+                    samples = None  # Add this line to force new sampling every time   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    
                 
                 if samples is None: # clear stored images
                     store_ksampler_results("image", my_unique_id, None)
@@ -609,18 +622,23 @@ class TSC_KSampler:
                     # samples = KSampler().sample(model, seed, steps, cfg, sampler_name, scheduler, positive, negative,
                     #                                         latent_image, denoise=denoise)[0] if denoise>0 else latent_image 
                     ######################################### LACE KSampler #########################################
-                    for step in range(LACE_step, LACE_step + LACE_Range + 1):
+                    for step in range(LACE_step + LACE_Range, LACE_step - 1, -1):
                         results = KSampler().sample(model, seed, steps, cfg, sampler_name, scheduler, positive, negative,
                                     latent_image, denoise=denoise, diffusion_step=step) if denoise>0 else latent_image
                         samples = results[0]
-                        # full_latents = results[1]
                         intermediate_latent.append(samples)
                     ######################################### LACE KSampler #########################################
                 elif sampler_type == "advanced":
-                    samples = KSamplerAdvanced().sample(model, add_noise, seed, steps, cfg, sampler_name, scheduler,
-                                                        positive, negative, latent_image, start_at_step, end_at_step,
-                                                        return_with_leftover_noise, denoise=1.0)[0]
-
+                    # samples = KSamplerAdvanced().sample(model, add_noise, seed, steps, cfg, sampler_name, scheduler,
+                    #                                     positive, negative, latent_image, start_at_step, end_at_step,
+                    #                                     return_with_leftover_noise, denoise=1.0)[0]
+                    ######################################### LACE KSampler #########################################
+                    for step in range(LACE_step + LACE_Range, LACE_step - 1, -1):
+                        results = KSamplerAdvanced().sample(model, add_noise, seed, steps, cfg, sampler_name, scheduler, positive, negative,
+                                    latent_image,  start_at_step, end_at_step, return_with_leftover_noise, denoise=1.0, diffusion_step=step)
+                        samples = results[0]
+                        intermediate_latent.append(samples)
+                    ######################################### LACE KSampler #########################################
                 elif sampler_type == "sdxl":
                     # Disable refiner if refine_at_step is -1
                     if end_at_step == -1:
@@ -735,7 +753,7 @@ class TSC_KSampler:
                 if "true" in vae_decode:
                     if images is None:
                         print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-                        images = vae_decode_latent(vae, samples[0], vae_decode)
+                        images = vae_decode_latent(vae, samples, vae_decode)
                         # Store decoded image as base image of no script is detected
                         if all(not keys_exist_in_script(key) for key in ["xyplot", "hiresfix", "tile", "anim"]):
                             store_ksampler_results("image", my_unique_id, images)
@@ -2246,26 +2264,28 @@ class TSC_KSamplerAdvanced(TSC_KSampler):
                      "return_with_leftover_noise": (["disable", "enable"],),
                      "preview_method": (["auto", "latent2rgb", "taesd", "none"],),
                      "vae_decode": (["true", "true (tiled)", "false", "output only", "output only (tiled)"],),
+                     "LACE_step": ("INT", {"default": 20, "min": 1, "max": 1000}),
+                     "LACE_Range": ("INT", {"default": 3, "min": 0, "max": 10}),
                      },
                 "optional": {"optional_vae": ("VAE",),
                              "script": ("SCRIPT",), },
                 "hidden": {"prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO", "my_unique_id": "UNIQUE_ID", },
                 }
 
-    RETURN_TYPES = ("MODEL", "CONDITIONING", "CONDITIONING", "LATENT", "VAE", "IMAGE",)
-    RETURN_NAMES = ("MODEL", "CONDITIONING+", "CONDITIONING-", "LATENT", "VAE", "IMAGE",)
+    RETURN_TYPES = ("MODEL", "CONDITIONING", "CONDITIONING", "LATENT", "VAE", "IMAGE", "LIST",)
+    RETURN_NAMES = ("MODEL", "CONDITIONING+", "CONDITIONING-", "LATENT", "VAE", "IMAGE", "LATENT_LIST",)
     OUTPUT_NODE = True
     FUNCTION = "sample_adv"
     CATEGORY = "LACE/Sampling"
 
     def sample_adv(self, model, add_noise, noise_seed, steps, cfg, sampler_name, scheduler, positive, negative,
                latent_image, start_at_step, end_at_step, return_with_leftover_noise, preview_method, vae_decode,
-               prompt=None, extra_pnginfo=None, my_unique_id=None, optional_vae=(None,), script=None):
+               prompt=None, extra_pnginfo=None, my_unique_id=None, optional_vae=(None,), script=None, LACE_Range=0, LACE_step =30):
 
         return super().sample(model, noise_seed, steps, cfg, sampler_name, scheduler, positive, negative,
                latent_image, preview_method, vae_decode, denoise=1.0, prompt=prompt, extra_pnginfo=extra_pnginfo, my_unique_id=my_unique_id,
                optional_vae=optional_vae, script=script, add_noise=add_noise, start_at_step=start_at_step,end_at_step=end_at_step,
-                       return_with_leftover_noise=return_with_leftover_noise,sampler_type="advanced")
+                       return_with_leftover_noise=return_with_leftover_noise,sampler_type="advanced", LACE_Range=LACE_Range, LACE_step=LACE_step)
 
 #=======================================================================================================================
 # TSC KSampler SDXL (Efficient)

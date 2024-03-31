@@ -131,26 +131,27 @@ def sample_euler_test(model, x, sigmas, extra_args=None, callback=None, disable=
     print(f'>>>>>>>>>> recieved diffusion_step in euler_test = {diffusion_step}')
     print(f'>>>>>>>>>> sigmas = {sigmas}')
     
-    list_of_x = []
+    # list_of_x = []
     for i, sigma in enumerate(sigmas[:-1], start=0):  # Enumerate over sigmas
+         # Check if current iteration matches the return_step
+        if diffusion_step is not None and i == diffusion_step:
+            return x
+        
         gamma = min(s_churn / (len(sigmas) - 1), 2 ** 0.5 - 1) if s_tmin <= sigma <= s_tmax else 0.
         sigma_hat = sigma * (gamma + 1)
         if gamma > 0:
             eps = torch.randn_like(x) * s_noise                 # add random noise
-            x = x + eps * (sigma_hat ** 2 - sigma ** 2) ** 0.5  # add noise to the input
+            x = x + eps * (sigma_hat ** 2 - sigma ** 2) ** 0.5  # scaled sigma_hat to obtain the denoised estimation
         denoised = model(x, sigma_hat * s_in, **extra_args)     # denoised prediction
-        d = to_d(x, sigma_hat, denoised)                        # denoising direction
+        d = to_d(x, sigma_hat, denoised)                        # gradient
         if callback is not None:
             callback({'x': x, 'i': i, 'sigma': sigma, 'sigma_hat': sigma_hat, 'denoised': denoised})
         dt = sigmas[i + 1] - sigma_hat
-        x = x + d * dt
-        list_of_x.append(x.detach().clone())
-        
-        # Check if current iteration matches the return_step
-        if diffusion_step is not None and i == diffusion_step:
-            return x, list_of_x
-    
-    return x, list_of_x
+        x = x + d * dt                                          # update x
+       
+        # list_of_x.append(x.detach().clone())
+        # exit loop
+    return x
 
 def sample_euler(model, x, sigmas, extra_args=None, callback=None, disable=None, s_churn=0., s_tmin=0., s_tmax=float('inf'), s_noise=1.):
     """Implements Algorithm 2 (Euler steps) from Karras et al. (2022)."""
@@ -559,8 +560,7 @@ def sample_dpmpp_2s_ancestral_test(model, x, sigmas, extra_args=None, callback=N
     s_in = x.new_ones([x.shape[0]])
     sigma_fn = lambda t: t.neg().exp()
     t_fn = lambda sigma: sigma.log().neg()
-    list_of_x = []
-    
+
     for i in trange(len(sigmas) - 1, disable=disable):
         denoised = model(x, sigmas[i] * s_in, **extra_args)
         sigma_down, sigma_up = get_ancestral_step(sigmas[i], sigmas[i + 1], eta=eta)
@@ -571,7 +571,6 @@ def sample_dpmpp_2s_ancestral_test(model, x, sigmas, extra_args=None, callback=N
             d = to_d(x, sigmas[i], denoised)
             dt = sigma_down - sigmas[i]
             x = x + d * dt
-            list_of_x.append(x.detach().clone())
         else:
             # DPM-Solver++(2S)
             t, t_next = t_fn(sigmas[i]), t_fn(sigma_down)
@@ -581,15 +580,14 @@ def sample_dpmpp_2s_ancestral_test(model, x, sigmas, extra_args=None, callback=N
             x_2 = (sigma_fn(s) / sigma_fn(t)) * x - (-h * r).expm1() * denoised
             denoised_2 = model(x_2, sigma_fn(s) * s_in, **extra_args)
             x = (sigma_fn(t_next) / sigma_fn(t)) * x - (-h).expm1() * denoised_2
-            list_of_x.append(x.detach().clone())
         # Noise addition
         if sigmas[i + 1] > 0:
             x = x + noise_sampler(sigmas[i], sigmas[i + 1]) * s_noise * sigma_up
 
         if diffusion_step is not None and i == diffusion_step:
-            return x, list_of_x
+            return x
 
-    return x, list_of_x
+    return x
 
 
 

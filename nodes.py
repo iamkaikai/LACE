@@ -264,7 +264,8 @@ class VAEDecode:
     CATEGORY = "latent"
 
     def decode(self, vae, samples):
-        print("VAEDecode!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        if isinstance(samples, tuple):
+            samples = samples[0]
         return (vae.decode(samples["samples"]), )
 
 class VAEDecodeTiled:
@@ -1255,6 +1256,10 @@ class SetLatentNoiseMask:
 
 ############## add arg #############
 def common_ksampler(model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent, denoise=1.0, disable_noise=False, start_step=None, last_step=None, force_full_denoise=False, diffusion_step=None):
+    
+    if isinstance(latent, tuple):
+        print("The latent is a tuple.")
+        latent = latent[0]
     latent_image = latent["samples"]
     if disable_noise:
         noise = torch.zeros(latent_image.size(), dtype=latent_image.dtype, layout=latent_image.layout, device="cpu")
@@ -1270,12 +1275,12 @@ def common_ksampler(model, seed, steps, cfg, sampler_name, scheduler, positive, 
     disable_pbar = not comfy.utils.PROGRESS_BAR_ENABLED
     
     ############## add arg #############
-    samples, full_lantents = comfy.sample.sample(model, noise, steps, cfg, sampler_name, scheduler, positive, negative, latent_image,
+    samples = comfy.sample.sample(model, noise, steps, cfg, sampler_name, scheduler, positive, negative, latent_image,
                                   denoise=denoise, disable_noise=disable_noise, start_step=start_step, last_step=last_step,
                                   force_full_denoise=force_full_denoise, noise_mask=noise_mask, callback=callback, disable_pbar=disable_pbar, seed=seed, diffusion_step=diffusion_step)
     out = latent.copy()
     out["samples"] = samples
-    return (out, ), full_lantents
+    return (out, )
 
 class KSampler:
     @classmethod
@@ -1293,7 +1298,7 @@ class KSampler:
                         "denoise": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01}),
                     },
                     "optional":{
-                        "diffusion_step": ("Diffusion Step",),
+                        "diffusion_step": ("diffusion_step",),
                     },
                 }
 
@@ -1303,8 +1308,8 @@ class KSampler:
 
     ############## add arg #############
     def sample(self, model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent_image, denoise=1.0, diffusion_step=None):
-        samples, full_lantents = common_ksampler(model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent_image, denoise=denoise, diffusion_step=diffusion_step)
-        return samples, full_lantents
+        samples = common_ksampler(model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent_image, denoise=denoise, diffusion_step=diffusion_step)
+        return samples
 
 class KSamplerAdvanced:
 
@@ -1332,7 +1337,7 @@ class KSamplerAdvanced:
                     "return_with_leftover_noise": (["disable", "enable"], ),
                     },
                     "optional":{
-                        "diffusion_step": ("Diffusion Step",),
+                        "diffusion_step": ("diffusion_step",),
                     },
                 }
 
