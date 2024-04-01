@@ -463,23 +463,31 @@ class TSC_KSampler:
     @classmethod
     def INPUT_TYPES(cls):
         return {"required":
-                    {"model": ("MODEL",),
-                     "seed": ("INT", {"default": 0, "min": 0, "max": 0xffffffffffffffff}),
-                     "steps": ("INT", {"default": 20, "min": 1, "max": 10000}),
-                     "cfg": ("FLOAT", {"default": 7.0, "min": 0.0, "max": 100.0}),
-                     "sampler_name": (comfy.samplers.KSampler.SAMPLERS,),
-                     "scheduler": (comfy.samplers.KSampler.SCHEDULERS,),
-                     "positive": ("CONDITIONING",),
-                     "negative": ("CONDITIONING",),
-                     "latent_image": ("LATENT",),
-                     "denoise": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01}),
-                     "preview_method": (["auto", "latent2rgb", "taesd", "vae_decoded_only", "none"],),
-                     "vae_decode": (["true", "true (tiled)", "false"],),
-                     "LACE_step": ("INT", {"default": 20, "min": 1, "max": 1000}),
-                     "LACE_Range": ("INT", {"default": 3, "min": 0, "max": 10}),
-                     },
+                    {
+                    "model": ("MODEL",),
+                    "seed": ("INT", {"default": 0, "min": 0, "max": 0xffffffffffffffff}),
+                    "steps": ("INT", {"default": 20, "min": 1, "max": 10000}),
+                    "cfg": ("FLOAT", {"default": 7.0, "min": 0.0, "max": 100.0}),
+                    "sampler_name": (comfy.samplers.KSampler.SAMPLERS,),
+                    "scheduler": (comfy.samplers.KSampler.SCHEDULERS,),
+                    "positive": ("CONDITIONING",),
+                    "negative": ("CONDITIONING",),
+                    "latent_image": ("LATENT",),
+                    "denoise": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01}),
+                    "preview_method": (["auto", "latent2rgb", "taesd", "vae_decoded_only", "none"],),
+                    "vae_decode": (["true", "true (tiled)", "false"],),
+                    "LACE_step": ("INT", {"default": 20, "min": 1, "max": 1000}),
+                    "LACE_Range": ("INT", {"default": 3, "min": 0, "max": 10}),
+                    "CADS": (["enable", "disable"],),
+                    "CADS_TAU_1": ("FLOAT", {"default": 0.5, "min": 0, "max": 1}),
+                    "CADS_TAU_2": ("FLOAT", {"default": 0.75, "min": 0, "max": 1}),
+                    "CADS_noise_scale": ("FLOAT", {"default": 1.0, "min": 0., "max": 1.}), 
+                    "CADS_use_psi": (["enable", "disable"],),
+                    "CADS_psi": ("FLOAT", {"default": 1.0, "min": 0., "max": 1.}),  
+                    },
                 "optional": { "optional_vae": ("VAE",),
                               "script": ("SCRIPT",),},
+                             
                 "hidden": {"prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO", "my_unique_id": "UNIQUE_ID",},
                 }
 
@@ -495,7 +503,8 @@ class TSC_KSampler:
     def sample(self, model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent_image,
                preview_method, vae_decode, denoise=1.0, LACE_step =30, prompt=None, extra_pnginfo=None, my_unique_id=None,
                optional_vae=(None,), script=None, add_noise=None, start_at_step=None, end_at_step=None,
-               return_with_leftover_noise=None, sampler_type="regular", LACE_Range=0):
+               return_with_leftover_noise=None, sampler_type="regular", LACE_Range=0, CADS="disable", 
+               CADS_TAU_1=0.5, CADS_TAU_2=0.75, CADS_noise_scale=1.0, CADS_psi=1.0, CADS_use_psi="disable"):
 
         # Rename the vae variable
         vae = optional_vae
@@ -535,6 +544,7 @@ class TSC_KSampler:
             original_KSampler = comfy.samplers.KSampler
             original_model_str = str(model)
             intermediate_latent = []
+            cads={"enable": CADS, "tau_1": CADS_TAU_1, "tau_2": CADS_TAU_2, "noise_scale": CADS_noise_scale, "psi": CADS_psi, "use_rescale_psi": CADS_use_psi}
 
             current_args = locals()
             current_args = {k: current_args[k] for k in ['LACE_Range', 'LACE_step'] if k in current_args}
@@ -619,7 +629,7 @@ class TSC_KSampler:
                     ######################################### LACE KSampler #########################################
                     for step in range(LACE_step + LACE_Range, LACE_step - 1, -1):
                         results = KSampler().sample(model, seed, steps, cfg, sampler_name, scheduler, positive, negative,
-                                    latent_image, denoise=denoise, diffusion_step=step) if denoise>0 else latent_image
+                                    latent_image, denoise=denoise, diffusion_step=step, cads=cads) if denoise>0 else latent_image
                         samples = results[0]
                         intermediate_latent.append(samples)
                     ######################################### LACE KSampler #########################################
@@ -631,7 +641,7 @@ class TSC_KSampler:
                     ######################################### LACE KSampler #########################################
                     for step in range(LACE_step + LACE_Range, LACE_step - 1, -1):
                         results = KSamplerAdvanced().sample(model, add_noise, seed, steps, cfg, sampler_name, scheduler, positive, negative,
-                                    latent_image,  start_at_step, end_at_step, return_with_leftover_noise, denoise=1.0, diffusion_step=step)
+                                    latent_image,  start_at_step, end_at_step, return_with_leftover_noise, denoise=1.0, diffusion_step=step, cads=cads)
                         samples = results[0]
                         intermediate_latent.append(samples)
                     ######################################### LACE KSampler #########################################

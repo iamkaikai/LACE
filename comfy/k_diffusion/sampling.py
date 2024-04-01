@@ -1,10 +1,11 @@
 import math
-
+import numpy as np
 from scipy import integrate
 import torch
 from torch import nn
 import torchsde
 from tqdm.auto import trange, tqdm
+from torch import randn_like
 
 from . import utils
 
@@ -133,7 +134,7 @@ def sample_euler_test(model, x, sigmas, extra_args=None, callback=None, disable=
     
     # list_of_x = []
     for i, sigma in enumerate(sigmas[:-1], start=0):  # Enumerate over sigmas
-         # Check if current iteration matches the return_step
+        # Check if current iteration matches the return_step
         if diffusion_step is not None and i == diffusion_step:
             return x
         
@@ -170,6 +171,86 @@ def sample_euler(model, x, sigmas, extra_args=None, callback=None, disable=None,
         dt = sigmas[i + 1] - sigma_hat
         # Euler method
         x = x + d * dt
+    return x
+
+@torch.no_grad()
+def sample_euler_ancestral_test(model, x, sigmas, extra_args=None, callback=None, disable=None, eta=1., s_noise=1., noise_sampler=None, diffusion_step=None, cads=None):
+    """Ancestral sampling with Euler method steps."""
+    extra_args = {} if extra_args is None else extra_args
+    noise_sampler = default_noise_sampler(x) if noise_sampler is None else noise_sampler
+    s_in = x.new_ones([x.shape[0]])
+    
+    """"""""""""""" CADS implementation """""""""""""""
+    if cads:
+        cads_enabled = True if cads['enable'] == 'enabled' else False
+        tau_1 = cads['tau_1']
+        tau_2 = cads['tau_2']
+        text_cond = extra_args["cond"][0]['cross_attn']
+        text_uncond = extra_args["uncond"][0]['cross_attn']
+        noise_scale = cads['noise_scale']
+        psi = cads['psi']
+        use_rescale_psi = True if cads['use_rescale_psi'] == 'enabled' else False
+    
+    print("\n\n\n\n\n\n")
+    print(f'>>>>>>>>>>>>>>>>>>>>>>>>>>>> text_cond = {text_cond}\n')
+    print(f'>>>>>>>>>>>>>>>>>>>>>>>>>>>> text_cond len = {len(text_cond)}')
+    print("\n\n\n\n\n\n")
+
+    def cads_linear_schedule(t, tau1, tau2):
+                """ CADS annealing schedule function """
+                if t <= tau1:
+                        return 1.0
+                if t>= tau2:
+                        return 0.0
+                gamma = (tau2-t)/(tau2-tau1)
+                return gamma
+
+    def add_noise(y, gamma, noise_scale, psi=1, rescale=False):
+                """ 
+                y: Input conditioning
+                gamma: Noise level w.r.t t
+                noise_scale (float): Noise scale
+                psi (float): Rescaling factor
+                rescale (bool): Rescale the condition
+                """
+                y_mean, y_std = torch.mean(y), torch.std(y)
+                y = np.sqrt(gamma) * y + noise_scale * np.sqrt(1-gamma) * randn_like(y)
+                if rescale:
+                        y_scaled = (y - torch.mean(y)) / torch.std(y) * y_std + y_mean
+                        if not torch.isnan(y_scaled).any():
+                            y = psi * y_scaled + (1 - psi) * y
+                        else:
+                            print("Warning: NaN encountered in rescaling")
+                return y
+    """"""""""""""""""""""""""""""""""""""""""""""""
+
+    for i in trange(len(sigmas) - 1, disable=disable):
+        # Check if current iteration matches the return_step
+        if diffusion_step is not None and i == diffusion_step:
+            return x
+    
+        # CADS
+        if cads_enabled:
+            if use_rescale_psi:
+                rescale_psi = True
+            else:
+                rescale_psi = False
+
+            t = 1.0 - (i / len(sigmas))
+            gamma = cads_linear_schedule(t, tau_1, tau_2)
+            extra_args["cond"][0]['cross_attn'] = add_noise(text_cond, gamma, noise_scale, psi, rescale_psi)
+            extra_args["uncond"][0]['cross_attn'] = add_noise(text_uncond, gamma, noise_scale, psi, rescale_psi)
+        
+        denoised = model(x, sigmas[i] * s_in, **extra_args)
+        sigma_down, sigma_up = get_ancestral_step(sigmas[i], sigmas[i + 1], eta=eta)
+        if callback is not None:
+            callback({'x': x, 'i': i, 'sigma': sigmas[i], 'sigma_hat': sigmas[i], 'denoised': denoised})
+        d = to_d(x, sigmas[i], denoised)
+        # Euler method
+        dt = sigma_down - sigmas[i]
+        x = x + d * dt
+        if sigmas[i + 1] > 0:
+            x = x + noise_sampler(sigmas[i], sigmas[i + 1]) * s_noise * sigma_up
     return x
 
 

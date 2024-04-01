@@ -1255,7 +1255,8 @@ class SetLatentNoiseMask:
         return (s,)
 
 ############## add arg #############
-def common_ksampler(model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent, denoise=1.0, disable_noise=False, start_step=None, last_step=None, force_full_denoise=False, diffusion_step=None):
+def common_ksampler(model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent, denoise=1.0, disable_noise=False, 
+                    start_step=None, last_step=None, force_full_denoise=False, diffusion_step=None, cads=None):
     
     if isinstance(latent, tuple):
         print("The latent is a tuple.")
@@ -1277,7 +1278,8 @@ def common_ksampler(model, seed, steps, cfg, sampler_name, scheduler, positive, 
     ############## add arg #############
     samples = comfy.sample.sample(model, noise, steps, cfg, sampler_name, scheduler, positive, negative, latent_image,
                                   denoise=denoise, disable_noise=disable_noise, start_step=start_step, last_step=last_step,
-                                  force_full_denoise=force_full_denoise, noise_mask=noise_mask, callback=callback, disable_pbar=disable_pbar, seed=seed, diffusion_step=diffusion_step)
+                                  force_full_denoise=force_full_denoise, noise_mask=noise_mask, callback=callback, disable_pbar=disable_pbar, 
+                                  seed=seed, diffusion_step=diffusion_step, cads=cads)
     out = latent.copy()
     out["samples"] = samples
     return (out, )
@@ -1299,6 +1301,7 @@ class KSampler:
                     },
                     "optional":{
                         "diffusion_step": ("diffusion_step",),
+                        "cads": ("cads",),
                     },
                 }
 
@@ -1307,8 +1310,8 @@ class KSampler:
     CATEGORY = "sampling"
 
     ############## add arg #############
-    def sample(self, model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent_image, denoise=1.0, diffusion_step=None):
-        samples = common_ksampler(model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent_image, denoise=denoise, diffusion_step=diffusion_step)
+    def sample(self, model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent_image, denoise=1.0, diffusion_step=None, cads=None):
+        samples = common_ksampler(model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent_image, denoise=denoise, diffusion_step=diffusion_step, cads=cads)
         return samples
 
 class KSamplerAdvanced:
