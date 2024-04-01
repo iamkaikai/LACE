@@ -499,9 +499,6 @@ class TSC_KSampler:
 
         # Rename the vae variable
         vae = optional_vae
-        
-        
-
 
         # If vae is not connected, disable vae decoding
         if vae == (None,) and vae_decode != "false":
@@ -540,12 +537,10 @@ class TSC_KSampler:
             intermediate_latent = []
 
             current_args = locals()
-            current_args.pop('self')  # Remove 'self' since it's not needed for comparison
+            current_args = {k: current_args[k] for k in ['LACE_Range', 'LACE_step'] if k in current_args}
             if self.previous_args == current_args:
-                print(">>>>>>>>>>>>>>>>>>>>>>>> Arguments have changed")
                 self.cache = True
             else:
-                print(">>>>>>>>>>>>>>>>>>>>>>>>>> Arguments remain the same or first invocation")
                 self.cache = False
             self.previous_args = current_args
 
@@ -604,7 +599,7 @@ class TSC_KSampler:
                 # Load previous latent if all parameters match, else returns 'None'
                 samples = load_ksampler_results("latent", my_unique_id, parameters)
                 
-                if self.cache:
+                if not self.cache:
                     samples = None  # Add this line to force new sampling every time   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     
                 
@@ -628,6 +623,7 @@ class TSC_KSampler:
                         samples = results[0]
                         intermediate_latent.append(samples)
                     ######################################### LACE KSampler #########################################
+                
                 elif sampler_type == "advanced":
                     # samples = KSamplerAdvanced().sample(model, add_noise, seed, steps, cfg, sampler_name, scheduler,
                     #                                     positive, negative, latent_image, start_at_step, end_at_step,
@@ -752,13 +748,11 @@ class TSC_KSampler:
                 # Decode image if not yet decoded
                 if "true" in vae_decode:
                     if images is None:
-                        print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
                         images = vae_decode_latent(vae, samples, vae_decode)
                         # Store decoded image as base image of no script is detected
                         if all(not keys_exist_in_script(key) for key in ["xyplot", "hiresfix", "tile", "anim"]):
                             store_ksampler_results("image", my_unique_id, images)
 
-                        print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
                 # Append Control Net Images (if exist)
                 if cnet_imgs is not None and not True:
                     if preprocessor_imgs and upscale_type == "latent":
@@ -2281,7 +2275,9 @@ class TSC_KSamplerAdvanced(TSC_KSampler):
     def sample_adv(self, model, add_noise, noise_seed, steps, cfg, sampler_name, scheduler, positive, negative,
                latent_image, start_at_step, end_at_step, return_with_leftover_noise, preview_method, vae_decode,
                prompt=None, extra_pnginfo=None, my_unique_id=None, optional_vae=(None,), script=None, LACE_Range=0, LACE_step =30):
-
+        
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! entered sample_adv")
+        
         return super().sample(model, noise_seed, steps, cfg, sampler_name, scheduler, positive, negative,
                latent_image, preview_method, vae_decode, denoise=1.0, prompt=prompt, extra_pnginfo=extra_pnginfo, my_unique_id=my_unique_id,
                optional_vae=optional_vae, script=script, add_noise=add_noise, start_at_step=start_at_step,end_at_step=end_at_step,
