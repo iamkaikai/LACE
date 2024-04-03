@@ -525,7 +525,7 @@ class UNIPCBH2(Sampler):
     def sample(self, model_wrap, sigmas, extra_args, callback, noise, latent_image=None, denoise_mask=None, disable_pbar=False):
         return uni_pc.sample_unipc(model_wrap, noise, latent_image, sigmas, max_denoise=self.max_denoise(model_wrap, sigmas), extra_args=extra_args, noise_mask=denoise_mask, callback=callback, variant='bh2', disable=disable_pbar)
 
-KSAMPLER_NAMES = ["euler_test","euler", "euler_ancestral","euler_ancestral_test", "heun", "heunpp2","dpm_2", "dpm_2_ancestral",
+KSAMPLER_NAMES = ["euler_test","euler", "euler_ancestral", "heun", "heunpp2","dpm_2", "dpm_2_ancestral",
                   "lms", "dpm_fast", "dpm_adaptive", "dpmpp_2s_ancestral", "dpmpp_2s_ancestral_test", "dpmpp_sde", "dpmpp_sde_gpu",
                   "dpmpp_2m", "dpmpp_2m_sde", "dpmpp_2m_sde_gpu", "dpmpp_3m_sde", "dpmpp_3m_sde_gpu", "ddpm", "lcm", "lcm_test"]
 
@@ -589,7 +589,7 @@ def wrap_model(model):
     return model_denoise
 
 def sample(model, noise, positive, negative, cfg, device, sampler, sigmas, model_options={}, latent_image=None, 
-           denoise_mask=None, callback=None, disable_pbar=False, seed=None, diffusion_step=None, cads=None):
+           denoise_mask=None, callback=None, disable_pbar=False, seed=None, diffusion_step=None):
     
     positive = positive[:]
     negative = negative[:]
@@ -622,8 +622,6 @@ def sample(model, noise, positive, negative, cfg, device, sampler, sigmas, model
 
     extra_args = {"cond":positive, "uncond":negative, "cond_scale": cfg, "model_options": model_options, "seed":seed}
     if diffusion_step is not None:
-        if cads is not None:   
-            samples = sampler.sample(model_wrap, sigmas, extra_args, callback, noise, latent_image, denoise_mask, disable_pbar, diffusion_step=diffusion_step, cads=cads)     #mark
         samples = sampler.sample(model_wrap, sigmas, extra_args, callback, noise, latent_image, denoise_mask, disable_pbar, diffusion_step=diffusion_step)     #mark
     else:
         samples = sampler.sample(model_wrap, sigmas, extra_args, callback, noise, latent_image, denoise_mask, disable_pbar)
@@ -664,7 +662,7 @@ class KSampler:
     SCHEDULERS = SCHEDULER_NAMES
     SAMPLERS = SAMPLER_NAMES
 
-    def __init__(self, model, steps, device, sampler=None, scheduler=None, denoise=None, model_options={}, diffusion_step=None, cads=None):
+    def __init__(self, model, steps, device, sampler=None, scheduler=None, denoise=None, model_options={}, diffusion_step=None):
         self.model = model
         self.device = device
         if scheduler not in self.SCHEDULERS:
@@ -677,7 +675,6 @@ class KSampler:
         self.denoise = denoise
         self.model_options = model_options
         self.diffusion_step = diffusion_step
-        self.cads = cads
 
     def calculate_sigmas(self, steps):
         sigmas = None
@@ -723,4 +720,4 @@ class KSampler:
         sampler = sampler_object(self.sampler)
 
         return sample(self.model, noise, positive, negative, cfg, self.device, sampler, sigmas, self.model_options, latent_image=latent_image, denoise_mask=denoise_mask, callback=callback, 
-                      disable_pbar=disable_pbar, seed=seed, diffusion_step=self.diffusion_step, cads=self.cads)
+                      disable_pbar=disable_pbar, seed=seed, diffusion_step=self.diffusion_step)
