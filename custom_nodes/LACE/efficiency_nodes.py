@@ -478,6 +478,7 @@ class TSC_KSampler:
                     "vae_decode": (["true", "true (tiled)", "false"],),
                     "LACE_step": ("INT", {"default": 20, "min": 1, "max": 1000}),
                     "LACE_Range": ("INT", {"default": 3, "min": 0, "max": 10}),
+                    "LACE_skip": ("INT", {"default": 0, "min": 0, "max": 10}),
                     },
                 "optional": { "optional_vae": ("VAE",),
                               "script": ("SCRIPT",),},
@@ -497,7 +498,7 @@ class TSC_KSampler:
     def sample(self, model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent_image,
                preview_method, vae_decode, denoise=1.0, LACE_step =30, prompt=None, extra_pnginfo=None, my_unique_id=None,
                optional_vae=(None,), script=None, add_noise=None, start_at_step=None, end_at_step=None,
-               return_with_leftover_noise=None, sampler_type="regular", LACE_Range=0):
+               return_with_leftover_noise=None, sampler_type="regular", LACE_Range=0, LACE_skip=0):
 
         # Rename the vae variable
         vae = optional_vae
@@ -619,7 +620,7 @@ class TSC_KSampler:
                     # samples = KSampler().sample(model, seed, steps, cfg, sampler_name, scheduler, positive, negative,
                     #                                         latent_image, denoise=denoise)[0] if denoise>0 else latent_image 
                     ######################################### LACE KSampler #########################################
-                    for step in range(LACE_step + LACE_Range, LACE_step - 1, -1):
+                    for step in range(LACE_step + LACE_Range * (LACE_skip + 1), LACE_step - 1, -LACE_skip-1):
                         results = KSampler().sample(model, seed, steps, cfg, sampler_name, scheduler, positive, negative,
                                     latent_image, denoise=denoise, diffusion_step=step) if denoise>0 else latent_image
                         samples = results[0]
@@ -631,7 +632,7 @@ class TSC_KSampler:
                     #                                     positive, negative, latent_image, start_at_step, end_at_step,
                     #                                     return_with_leftover_noise, denoise=1.0)[0]
                     ######################################### LACE KSampler #########################################
-                    for step in range(LACE_step + LACE_Range, LACE_step - 1, -1):
+                    for step in range(LACE_step + LACE_Range * (LACE_skip + 1), LACE_step - 1, -LACE_skip-1):
                         results = KSamplerAdvanced().sample(model, add_noise, seed, steps, cfg, sampler_name, scheduler, positive, negative,
                                     latent_image,  start_at_step, end_at_step, return_with_leftover_noise, denoise=1.0, diffusion_step=step)
                         samples = results[0]
