@@ -15,24 +15,100 @@ class ImageSlideshow:
         self.folder_path = folder_path
         self.rows = rows
         self.columns = columns
-        self.img_size = 256
+        self.img_size = 180
         self.num_img = rows * columns
         self.PS_window_title = None
         self.window_titles = []
         self.master.title("LACE - by Kyle")
-        self.master.attributes("-topmost", True)
+        self.master.attributes("-topmost", False)
+
+        # Set up the grid configuration for master
+        self.master.rowconfigure(0, weight=1)
+        for i in range(self.columns):
+            self.master.columnconfigure(i, weight=1)
+
+        # Canvas setup with grid
         self.canvas = tk.Canvas(master, width=self.img_size * columns, height=self.img_size * rows)
-        self.canvas.pack()
+        self.canvas.grid(row=0, column=0, columnspan=self.columns, sticky='nsew')
+        self.canvas.config(bg='gray75')
+
+        # Sliders setup with grid
+        self.sampling_step_slider = tk.Scale(self.master, from_=1, to=20, orient='horizontal', label='Sampling Steps')
+        self.sampling_step_slider.set(16)
+        self.sampling_step_slider.grid(row=1, column=0, sticky='ew', padx=5, pady=5)
+
+        self.LACE_step_slider = tk.Scale(self.master, from_=1, to=20, orient='horizontal', label='Visualized Steps')
+        self.LACE_step_slider.set(12)
+        self.LACE_step_slider.grid(row=1, column=1, sticky='ew', padx=5, pady=5)
+
+        # num_images Scale
+        self.num_images_slider = tk.Scale(self.master, from_=1, to=9, tickinterval=1, orient='horizontal', label='Number of Images')
+        self.num_images_slider.grid(row=2, column=0, sticky='ew', padx=5, pady=5)
+
+        # noise_scale Scale
+        self.noise_scale_slider = tk.Scale(self.master, from_=0, to=0.5, resolution=0.01, orient='horizontal', label='Noise Scale')
+        self.noise_scale_slider.set(0.2)
+        self.noise_scale_slider.grid(row=2, column=1, sticky='new', padx=5, pady=5)
+
+        # prompt_positive Entry
+        self.prompt_positive_entry = tk.Entry(self.master)
+        self.prompt_positive_label = tk.Label(self.master, text='Prompt Positive')
+        self.prompt_positive_entry = tk.Text(self.master, height=3, width=48, wrap=tk.WORD)
+        self.prompt_positive_label.grid(row=3, column=0, sticky='w', padx=5, pady=0, columnspan=2)
+        self.prompt_positive_entry.grid(row=4, column=0, sticky='new', padx=5, pady=5, columnspan=2, ipady=3)
+
+        # prompt_negative Entry
+        self.prompt_negative_entry = tk.Entry(self.master)
+        self.prompt_negative_label = tk.Label(self.master, text='Prompt Negative')
+        self.prompt_negative_entry = tk.Text(self.master, height=3, width=48, wrap=tk.WORD)
+        self.prompt_negative_label.grid(row=5, column=0, sticky='w', padx=5, pady=0, columnspan=2)
+        self.prompt_negative_entry.grid(row=6, column=0, sticky='new', padx=5, pady=5, columnspan=2, ipady=3)
+
+        # noise_type OptionMenu
+        self.noise_type_var = tk.StringVar(self.master)
+        self.diversity_label = tk.Label(self.master, text='Output Diversity')
+        self.diversity_label.grid(row=7, column=0, sticky='w', padx=5, pady=0)
+        self.noise_type_var.set('Gaussian')  # default value
+        self.noise_type_menu = tk.OptionMenu(self.master, self.noise_type_var, 'Gaussian', 'Uniform', 'Exponential')
+        self.noise_type_menu.grid(row=8, column=0, sticky='ew', padx=5, pady=0)
+
+        # creative_mode OptionMenu
+        self.creative_mode_var = tk.StringVar(self.master)
+        self.creative_mode_label = tk.Label(self.master, text='Creative Mode')
+        self.creative_mode_label.grid(row=7, column=1, sticky='w', padx=5, pady=0)
+        self.creative_mode_var.set('Normal')  # default value
+        self.creative_mode_menu = tk.OptionMenu(self.master, self.creative_mode_var, 'Normal', 'Radical')
+        self.creative_mode_menu.grid(row=8, column=1, sticky='ew', padx=5, pady=0)
         
+        # seed OptionMenu
+        self.seed_var = tk.StringVar(self.master)
+        self.seed_label = tk.Label(self.master, text='Sampling Seed')
+        self.seed_label.grid(row=9, column=0, sticky='w', padx=5, pady=0)
+        self.seed_var.set('Incremental')  # default value
+        self.seed_menu = tk.OptionMenu(self.master, self.seed_var, 'Fixed', 'Incremental', 'Randomized')
+        self.seed_menu.grid(row=10, column=0, sticky='ew', padx=5, pady=0)
+
+        # LoRA OptionMenu
+        self.lora_var = tk.StringVar(self.master)  # Changed variable name to lora_var
+        self.lora_label = tk.Label(self.master, text='LoRA Model')  # Changed variable name to lora_label
+        self.lora_label.grid(row=9, column=1, sticky='w', padx=5, pady=0)
+        self.lora_var.set('Cubism')  # default value
+        self.lora_menu = tk.OptionMenu(self.master, self.lora_var, 'Cubism', 'Impressionism', 'Surrealism')  # Changed options for demonstration
+        self.lora_menu.grid(row=10, column=1, sticky='ew', padx=5, pady=0)
+
+        # Submit Button
+        self.submit_button = tk.Button(self.master, text="Generate", command=self.submit)
+        self.submit_button.grid(row=11, column=0, columnspan=2, sticky='ew', padx=5, pady=15, ipady=6)
+
+
+        # Button setup with grid
+        self.toggle_button = tk.Button(self.master, text="📌", command=self.borderless)
+        self.toggle_button.grid(row=11, column=self.columns - 1, sticky='ne', padx=5, pady=15, ipady=6, ipadx=6)
+
+        # Initialize additional attributes and bindings
         self.is_borderless = False
         self.image_objects = []
         self.last_batch = []
-        self.toggle_button = tk.Button(self.master, text="📌", command=self.borderless)
-        self.toggle_button.pack()
-        self.toggle_button.place( x = columns*self.img_size-25, y=4)
-       
-        self.start_x = self.master.winfo_x()
-        self.start_y = self.master.winfo_y()
 
         self.canvas.bind("<Button-1>", self.on_canvas_click)
         self.canvas.bind("<B1-Motion>", self.on_motion)
@@ -40,6 +116,18 @@ class ImageSlideshow:
         self.images = self.load_images(self.folder_path)
         self.update_image()
 
+    def submit(self):
+        # Here you will collect all the values from the widgets and process them
+        print("Seed:", self.seed_var.get())
+        print("Noise Scale:", self.noise_scale_slider.get())
+        print("Noise Type:", self.noise_type_var.get())
+        print("Creative Mode:", self.creative_mode_var.get())
+        print("Number of Images:", self.num_images_slider.get())
+        print("Prompt Positive:", self.prompt_positive_entry.get("1.0", tk.END).strip())  # For Text widget
+        print("Prompt Negative:", self.prompt_negative_entry.get("1.0", tk.END).strip())  # For Text widget
+        print("LoRA Model:", self.lora_var.get())
+        print("Visualized Steps:", self.LACE_step_slider.get())
+        print("Sampling Steps:", self.sampling_step_slider.get())
 
     def on_motion(self, event):
         # Get the absolute screen position of the mouse
@@ -62,6 +150,8 @@ class ImageSlideshow:
         self.master.geometry(f"+{new_x}+{new_y}")
 
     def load_images(self, folder_path):
+        if not os.path.exists(folder_path):
+            return [],[]
         image_files = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith(('png', 'jpg', 'jpeg', 'gif'))]
         image_files.sort(key=lambda x: os.path.getmtime(x), reverse=True)       # Sort the files by modification time in descending order
         latest_images = image_files[:self.num_img]                                         # Keep only the latest nine images
@@ -103,7 +193,7 @@ class ImageSlideshow:
             if not latest_images:
                 self.canvas.create_text(
                     self.canvas.winfo_width() / 2, self.canvas.winfo_height() / 2,
-                    text="Loading...", font=('Helvetica', 12), fill="gray")
+                    text="Loading...", font=('Helvetica', 8), fill="gray")
 
             if latest_images != self.last_batch:
                 self.last_batch = latest_images
