@@ -130,7 +130,7 @@ class TSC_EfficientLoader:
 
         # Clean globally stored objects
         globals_cleanup(prompt)
-
+        print("bbbbbbbbbbbbbbbbbbbbbbbbbbb   efficientloader")
         # Create Empty Latent
         latent = torch.zeros([batch_size, 4, empty_latent_height // 8, empty_latent_width // 8]).cpu()
 
@@ -451,7 +451,6 @@ class VAEDecodeLACE:
         
 
 def read_all_args(args_dict):
-
     print("Arguments:", args_dict)
 
 ########################################################################################################################
@@ -502,7 +501,6 @@ class TSC_KSampler:
 
         # Rename the vae variable
         vae = optional_vae
-
         # If vae is not connected, disable vae decoding
         if vae == (None,) and vae_decode != "false":
             print(f"{warning('KSampler(Efficient) Warning:')} No vae input detected, proceeding as if vae_decode was false.\n")
@@ -602,7 +600,7 @@ class TSC_KSampler:
 
                 # Load previous latent if all parameters match, else returns 'None'
                 samples = load_ksampler_results("latent", my_unique_id, parameters)
-                
+
                 if not self.cache:
                     samples = None  # Add this line to force new sampling every time   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                                 
