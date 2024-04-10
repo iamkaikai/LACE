@@ -1,4 +1,3 @@
-import tkinter as tk
 from PIL import Image, ImageTk
 import os
 import win32clipboard
@@ -6,21 +5,27 @@ import win32com.client
 from io import BytesIO
 import win32gui
 import win32con
+import tkinter as tk
 import re
+import sys
+import json
 
-class ImageSlideshow:
-
-    def __init__(self, master, folder_path, rows=2, columns=2):
+class popup_GUI:
+    def __init__(self, master, folder_path):
+        self.saved_parameters_path = 'user_input_data.json'
         self.master = master
+        self.num_img = 1
+        self.rows = 2
+        self.columns = 2
+        self.canvas_height = 360
         self.folder_path = folder_path
-        self.rows = rows
-        self.columns = columns
-        self.img_size = 180
-        self.num_img = rows * columns
+        self.img_size = self.canvas_height // 2
         self.PS_window_title = None
         self.window_titles = []
         self.master.title("LACE - by Kyle")
         self.master.attributes("-topmost", False)
+        self.user_input_data = None  # store the parameters of GUI as a dictionary
+        self.lora_models = self.get_lora_model('./models/loras')    # Get the list of LoRA models
 
         # Set up the grid configuration for master
         self.master.rowconfigure(0, weight=1)
@@ -28,43 +33,45 @@ class ImageSlideshow:
             self.master.columnconfigure(i, weight=1)
 
         # Canvas setup with grid
-        self.canvas = tk.Canvas(master, width=self.img_size * columns, height=self.img_size * rows)
-        self.canvas.grid(row=0, column=0, columnspan=self.columns, sticky='nsew')
+        self.canvas = tk.Canvas(master, width=self.img_size * self.columns, height=self.canvas_height)
+        self.canvas.grid(row=0, column=0, columnspan=2, sticky='nsew')
         self.canvas.config(bg='gray75')
 
-        # Sliders setup with grid
+        #1 Sliders setup with grid
         self.sampling_step_slider = tk.Scale(self.master, from_=1, to=20, orient='horizontal', label='Sampling Steps')
         self.sampling_step_slider.set(16)
         self.sampling_step_slider.grid(row=1, column=0, sticky='ew', padx=5, pady=5)
 
+        #2 LACE_step_slider Scale
         self.LACE_step_slider = tk.Scale(self.master, from_=1, to=20, orient='horizontal', label='Visualized Steps')
         self.LACE_step_slider.set(12)
         self.LACE_step_slider.grid(row=1, column=1, sticky='ew', padx=5, pady=5)
 
-        # num_images Scale
+        #3 num_images Scale
         self.num_images_slider = tk.Scale(self.master, from_=1, to=9, tickinterval=1, orient='horizontal', label='Number of Images')
+        self.num_images_slider.set(4)
         self.num_images_slider.grid(row=2, column=0, sticky='ew', padx=5, pady=5)
 
-        # noise_scale Scale
+        #4 noise_scale Scale
         self.noise_scale_slider = tk.Scale(self.master, from_=0, to=0.5, resolution=0.01, orient='horizontal', label='Noise Scale')
-        self.noise_scale_slider.set(0.2)
+        self.noise_scale_slider.set(0.25)
         self.noise_scale_slider.grid(row=2, column=1, sticky='new', padx=5, pady=5)
 
-        # prompt_positive Entry
+        #5 prompt_positive Entry
         self.prompt_positive_entry = tk.Entry(self.master)
         self.prompt_positive_label = tk.Label(self.master, text='Prompt Positive')
         self.prompt_positive_entry = tk.Text(self.master, height=3, width=48, wrap=tk.WORD)
         self.prompt_positive_label.grid(row=3, column=0, sticky='w', padx=5, pady=0, columnspan=2)
         self.prompt_positive_entry.grid(row=4, column=0, sticky='new', padx=5, pady=5, columnspan=2, ipady=3)
 
-        # prompt_negative Entry
+        #6 prompt_negative Entry
         self.prompt_negative_entry = tk.Entry(self.master)
         self.prompt_negative_label = tk.Label(self.master, text='Prompt Negative')
         self.prompt_negative_entry = tk.Text(self.master, height=3, width=48, wrap=tk.WORD)
         self.prompt_negative_label.grid(row=5, column=0, sticky='w', padx=5, pady=0, columnspan=2)
         self.prompt_negative_entry.grid(row=6, column=0, sticky='new', padx=5, pady=5, columnspan=2, ipady=3)
 
-        # noise_type OptionMenu
+        #7 noise_type OptionMenu
         self.noise_type_var = tk.StringVar(self.master)
         self.diversity_label = tk.Label(self.master, text='Output Diversity')
         self.diversity_label.grid(row=7, column=0, sticky='w', padx=5, pady=0)
@@ -72,7 +79,7 @@ class ImageSlideshow:
         self.noise_type_menu = tk.OptionMenu(self.master, self.noise_type_var, 'Gaussian', 'Uniform', 'Exponential')
         self.noise_type_menu.grid(row=8, column=0, sticky='ew', padx=5, pady=0)
 
-        # creative_mode OptionMenu
+        #8 creative_mode OptionMenu
         self.creative_mode_var = tk.StringVar(self.master)
         self.creative_mode_label = tk.Label(self.master, text='Creative Mode')
         self.creative_mode_label.grid(row=7, column=1, sticky='w', padx=5, pady=0)
@@ -80,7 +87,7 @@ class ImageSlideshow:
         self.creative_mode_menu = tk.OptionMenu(self.master, self.creative_mode_var, 'Normal', 'Radical')
         self.creative_mode_menu.grid(row=8, column=1, sticky='ew', padx=5, pady=0)
         
-        # seed OptionMenu
+        #9 seed OptionMenu
         self.seed_var = tk.StringVar(self.master)
         self.seed_label = tk.Label(self.master, text='Sampling Seed')
         self.seed_label.grid(row=9, column=0, sticky='w', padx=5, pady=0)
@@ -88,12 +95,19 @@ class ImageSlideshow:
         self.seed_menu = tk.OptionMenu(self.master, self.seed_var, 'Fixed', 'Incremental', 'Randomized')
         self.seed_menu.grid(row=10, column=0, sticky='ew', padx=5, pady=0)
 
-        # LoRA OptionMenu
+        #10 LoRA OptionMenu
+        
         self.lora_var = tk.StringVar(self.master)  # Changed variable name to lora_var
         self.lora_label = tk.Label(self.master, text='LoRA Model')  # Changed variable name to lora_label
         self.lora_label.grid(row=9, column=1, sticky='w', padx=5, pady=0)
-        self.lora_var.set('Cubism')  # default value
-        self.lora_menu = tk.OptionMenu(self.master, self.lora_var, 'Cubism', 'Impressionism', 'Surrealism')  # Changed options for demonstration
+        
+        
+        if self.lora_models:
+            default_lora_model = self.lora_models[0]
+        else:
+            default_lora_model = 'No models found'
+        self.lora_var.set(default_lora_model)  # default value
+        self.lora_menu = tk.OptionMenu(self.master, self.lora_var, *self.lora_models)
         self.lora_menu.grid(row=10, column=1, sticky='ew', padx=5, pady=0)
 
         # Submit Button
@@ -116,18 +130,33 @@ class ImageSlideshow:
         self.images = self.load_images(self.folder_path)
         self.update_image()
 
+    def restart_program(self):
+        python = sys.executable
+        os.execl(python, python, * sys.argv)
+
     def submit(self):
-        # Here you will collect all the values from the widgets and process them
-        print("Seed:", self.seed_var.get())
-        print("Noise Scale:", self.noise_scale_slider.get())
-        print("Noise Type:", self.noise_type_var.get())
-        print("Creative Mode:", self.creative_mode_var.get())
-        print("Number of Images:", self.num_images_slider.get())
-        print("Prompt Positive:", self.prompt_positive_entry.get("1.0", tk.END).strip())  # For Text widget
-        print("Prompt Negative:", self.prompt_negative_entry.get("1.0", tk.END).strip())  # For Text widget
-        print("LoRA Model:", self.lora_var.get())
-        print("Visualized Steps:", self.LACE_step_slider.get())
-        print("Sampling Steps:", self.sampling_step_slider.get())
+        # Collect all the values from the widgets and store them
+        self.user_input_data = {
+            'seed': self.seed_var.get(),
+            'noise_scale': self.noise_scale_slider.get(),
+            'noise_type': self.noise_type_var.get(),
+            'creative_mode': self.creative_mode_var.get(),
+            'num_images': self.num_images_slider.get(),
+            'prompt_positive': self.prompt_positive_entry.get("1.0", tk.END).strip(),
+            'prompt_negative': self.prompt_negative_entry.get("1.0", tk.END).strip(),
+            'lora_model': self.lora_var.get(),
+            'visualized_steps': self.LACE_step_slider.get(),
+            'sampling_steps': self.sampling_step_slider.get(),
+        }
+        with open(self.saved_parameters_path, 'w') as f:
+            json.dump(self.user_input_data, f, indent=4)
+            
+    def get_lora_model(self, path):
+        try:
+            return [model for model in os.listdir(path)]
+        except Exception as e:
+            print(f"Error: {e}")
+            return []
 
     def on_motion(self, event):
         # Get the absolute screen position of the mouse
@@ -273,9 +302,13 @@ class ImageSlideshow:
                 break
 
 # Usage
-
 root = tk.Tk()
-app = ImageSlideshow(root, './temp')
+width = 360
+height = 872
+x_position = 500
+y_position = 50
+root.geometry(f'{width}x{height}+{x_position}+{y_position}')
+app = popup_GUI(root, './temp')
 root.mainloop()
 
 
