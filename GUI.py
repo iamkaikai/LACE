@@ -7,16 +7,15 @@ import win32gui
 import win32con
 import tkinter as tk
 import re
-import sys
-import json
+import sys, time, json
 
 class popup_GUI:
     def __init__(self, master, folder_path):
         self.saved_parameters_path = 'user_input_data.json'
         self.master = master
-        self.num_img = 1
         self.rows = 2
         self.columns = 2
+        self.num_img = self.rows * self.columns
         self.canvas_height = 360
         self.folder_path = folder_path
         self.img_size = self.canvas_height // 2
@@ -137,10 +136,10 @@ class popup_GUI:
     def submit(self):
         # Collect all the values from the widgets and store them
         self.user_input_data = {
-            'seed': self.seed_var.get(),
+            'seed_mode': self.seed_var.get(),
             'noise_scale': self.noise_scale_slider.get(),
             'noise_type': self.noise_type_var.get(),
-            'creative_mode': self.creative_mode_var.get(),
+            'reverse_CADS': self.creative_mode_var.get(),
             'num_images': self.num_images_slider.get(),
             'prompt_positive': self.prompt_positive_entry.get("1.0", tk.END).strip(),
             'prompt_negative': self.prompt_negative_entry.get("1.0", tk.END).strip(),
@@ -150,6 +149,7 @@ class popup_GUI:
         }
         with open(self.saved_parameters_path, 'w') as f:
             json.dump(self.user_input_data, f, indent=4)
+        
             
     def get_lora_model(self, path):
         try:
@@ -178,12 +178,23 @@ class popup_GUI:
         # Move the window
         self.master.geometry(f"+{new_x}+{new_y}")
 
+    def clear_folder(self, folder_path):
+        for filename in os.listdir(folder_path):
+            file_path = os.path.join(folder_path, filename)
+            try:
+                if os.path.isfile(file_path) or os.path.islink(file_path):
+                    os.unlink(file_path)
+                elif os.path.isdir(file_path):
+                    shutil.rmtree(file_path)
+            except Exception as e:
+                print(f'Failed to delete {file_path}. Reason: {e}')
+
     def load_images(self, folder_path):
         if not os.path.exists(folder_path):
-            return [],[]
+            return [], []
         image_files = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith(('png', 'jpg', 'jpeg', 'gif'))]
-        image_files.sort(key=lambda x: os.path.getmtime(x), reverse=True)       # Sort the files by modification time in descending order
-        latest_images = image_files[:self.num_img]                                         # Keep only the latest nine images
+        image_files.sort(key=lambda x: os.path.getctime(x), reverse=True)
+        latest_images = image_files[:self.num_img]
         return latest_images, [Image.open(img) for img in latest_images]
 
     def borderless(self):
@@ -215,7 +226,6 @@ class popup_GUI:
                 break
 
     def update_image(self):
-        
         try:
             latest_images, image_objects = self.load_images(self.folder_path)  # Reload the latest images
 
@@ -245,13 +255,12 @@ class popup_GUI:
                             image_id = self.canvas.create_image(x, y, image=tk_image, tags=f"image{img_index}")
                             self.image_objects.append((image_id, tk_image, latest_images[img_index]))
 
-                    
             # Schedule the next update; adjust the interval as needed
             self.master.after(1000, self.update_image)
 
         except Exception as e:
             print(f"Error: {e}")
-            self.master.after(500, self.update_image)
+            self.master.after(1000, self.update_image)
 
     def bring_to_front(self, window_title, doc):
         hwnd = win32gui.FindWindow(None, window_title)
