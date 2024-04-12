@@ -99,19 +99,21 @@ class TSC_EfficientLoader:
 
     @classmethod
     def INPUT_TYPES(cls):
-        return {"required": { "ckpt_name": (folder_paths.get_filename_list("checkpoints"),),
+        return {"required": { 
+                              "batch_size": ("batch_size",),
+                              "ckpt_name": (folder_paths.get_filename_list("checkpoints"),),
                               "vae_name": (["Baked VAE"] + folder_paths.get_filename_list("vae"),),
                               "clip_skip": ("INT", {"default": -1, "min": -24, "max": -1, "step": 1}),
-                              "lora_name": (["None"] + folder_paths.get_filename_list("loras"),),
                               "lora_model_strength": ("FLOAT", {"default": 1.0, "min": -10.0, "max": 10.0, "step": 0.01}),
                               "lora_clip_strength": ("FLOAT", {"default": 1.0, "min": -10.0, "max": 10.0, "step": 0.01}),
-                              "positive": ("STRING", {"default": "CLIP_POSITIVE","multiline": True}),
-                              "negative": ("STRING", {"default": "CLIP_NEGATIVE", "multiline": True}),
+                              "positive": ("positive",),
+                              "negative": ("negative",),
+                              "lora_name": ("lora_name",),
                               "token_normalization": (["none", "mean", "length", "length+mean"],),
                               "weight_interpretation": (["comfy", "A1111", "compel", "comfy++", "down_weight"],),
                               "empty_latent_width": ("INT", {"default": 512, "min": 64, "max": MAX_RESOLUTION, "step": 64}),
                               "empty_latent_height": ("INT", {"default": 512, "min": 64, "max": MAX_RESOLUTION, "step": 64}),
-                              "batch_size": ("INT", {"default": 1, "min": 1, "max": 262144})},
+                            },
                 "optional": {"lora_stack": ("LORA_STACK", ),
                              "cnet_stack": ("CONTROL_NET_STACK",)},
                 "hidden": { "prompt": "PROMPT",
@@ -130,7 +132,6 @@ class TSC_EfficientLoader:
 
         # Clean globally stored objects
         globals_cleanup(prompt)
-        print("bbbbbbbbbbbbbbbbbbbbbbbbbbb   efficientloader")
         # Create Empty Latent
         latent = torch.zeros([batch_size, 4, empty_latent_height // 8, empty_latent_width // 8]).cpu()
 
@@ -344,7 +345,7 @@ class TSC_Control_Net_Stacker:
     def INPUT_TYPES(cls):
         return {"required": {"control_net": ("CONTROL_NET",),
                              "image": ("IMAGE",),
-                             "strength": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 10.0, "step": 0.01}),
+                             "strength": ("strength",),
                              "start_percent": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 1.0, "step": 0.001}),
                              "end_percent": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.001})},
                 "optional": {"cnet_stack": ("CONTROL_NET_STACK",)},
@@ -465,17 +466,17 @@ class TSC_KSampler:
                     {
                     "model": ("MODEL",),
                     "seed": ("INT", {"default": 0, "min": 0, "max": 0xffffffffffffffff}),
-                    "steps": ("INT", {"default": 20, "min": 1, "max": 10000}),
+                    "denoise": ("denoise",),
                     "cfg": ("FLOAT", {"default": 7.0, "min": 0.0, "max": 100.0}),
                     "sampler_name": (comfy.samplers.KSampler.SAMPLERS,),
                     "scheduler": (comfy.samplers.KSampler.SCHEDULERS,),
                     "positive": ("CONDITIONING",),
                     "negative": ("CONDITIONING",),
                     "latent_image": ("LATENT",),
-                    "denoise": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01}),
+                    "steps": ("steps",),
                     "preview_method": (["auto", "latent2rgb", "taesd", "vae_decoded_only", "none"],),
                     "vae_decode": (["true", "true (tiled)", "false"],),
-                    "LACE_step": ("INT", {"default": 20, "min": 1, "max": 1000}),
+                    "LACE_step": ("LACE_step",),
                     "LACE_Range": ("INT", {"default": 3, "min": 0, "max": 10}),
                     "LACE_skip": ("INT", {"default": 0, "min": 0, "max": 10}),
                     },
@@ -537,7 +538,7 @@ class TSC_KSampler:
             intermediate_latent = []
 
             current_args = locals()
-            current_args = {k: current_args[k] for k in ['LACE_Range', 'LACE_step'] if k in current_args}
+            current_args = {k: current_args[k] for k in ['LACE_Range', 'LACE_skip'] if k in current_args}
             
             if self.previous_args == current_args:
                 self.cache = True
@@ -4253,7 +4254,7 @@ NODE_CLASS_MAPPINGS = {
     "Efficient Loader (LACE)": TSC_EfficientLoader,
     "Eff. Loader SDXL (LACE)": TSC_EfficientLoaderSDXL,
     "LoRA Stacker": TSC_LoRA_Stacker,
-    "Control Net Stacker": TSC_Control_Net_Stacker,
+    "Control Net Stacker (LACE)": TSC_Control_Net_Stacker,
     "Apply ControlNet Stack": TSC_Apply_ControlNet_Stack,
     "Unpack SDXL Tuple": TSC_Unpack_SDXL_Tuple,
     "Pack SDXL Tuple": TSC_Pack_SDXL_Tuple,

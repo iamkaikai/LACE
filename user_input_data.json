@@ -1,0 +1,13 @@
+{
+    "num_output": 9,
+    "noise_scale": 0.25,
+    "noise_type": "Gaussian",
+    "reverse_CADS": "Normal",
+    "denoise": 1.0,
+    "prompt_positive": "MATISSEE-ART",
+    "prompt_negative": "bad composition, blurry image, low resolution",
+    "lora_model": "MATISSEE-ART_webui.safetensors",
+    "visualized_steps": 20,
+    "sampling_steps": 20,
+    "strength": 0.1
+}
