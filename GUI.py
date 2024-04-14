@@ -7,8 +7,9 @@ import win32gui
 import win32con
 import tkinter as tk
 import re
-import sys, json, requests, time
+import sys, json, requests, logging
 from tkinter import font
+from datetime import datetime
 
 class popup_GUI:
     def __init__(self, master, folder_path):
@@ -60,10 +61,15 @@ class popup_GUI:
         self.noise_scale_slider.set(0.25)
         self.noise_scale_slider.grid(row=2, column=1, sticky='ew', padx=5, pady=0)
 
+        #5 num of output OptionMenu
+        self.num_output_var = tk.Scale(self.master, from_=1, to=9, resolution=1, orient='horizontal', label='Number of Output')
+        self.num_output_var.set(4)
+        self.num_output_var.grid(row=3, column=0, sticky='ew', padx=5, pady=10)
+
         #5 Control Net strength Slider    
         self.controlnet_slider = tk.Scale(self.master, from_=0, to=1, resolution=0.01, orient='horizontal', label='Output Influence')
-        self.controlnet_slider.set(0.1)
-        self.controlnet_slider.grid(row=3, column=0, sticky='nesw', padx=5, pady=10, columnspan=2)
+        self.controlnet_slider.set(0.05)
+        self.controlnet_slider.grid(row=3, column=1, sticky='nesw', padx=5, pady=10)
 
         #6 prompt_positive Entry
         self.prompt_positive_entry = tk.Entry(self.master)
@@ -97,33 +103,28 @@ class popup_GUI:
         self.creative_mode_menu = tk.OptionMenu(self.master, self.creative_mode_var, 'Normal', 'Radical')
         self.creative_mode_menu.grid(row=9, column=1, sticky='ew', padx=5, pady=0)
         
-        #10 num of output OptionMenu
-        self.num_output_var = tk.StringVar(self.master)
-        self.num_output_label = tk.Label(self.master, text='Number of Output')
-        self.num_output_label.grid(row=10, column=0, sticky='w', padx=5, pady=0)
-        self.num_output_var.set('4')
-        self.num_output_menu = tk.OptionMenu(self.master, self.num_output_var, '1', '4', '9')
-        self.num_output_menu.grid(row=11, column=0, sticky='ew', padx=5, pady=0)
-
         #11 LoRA OptionMenu     
         self.lora_var = tk.StringVar(self.master)  # Changed variable name to lora_var
         self.lora_label = tk.Label(self.master, text='LoRA Model')  # Changed variable name to lora_label
-        self.lora_label.grid(row=10, column=1, sticky='w', padx=5, pady=0)
+        self.lora_label.grid(row=10, column=0, sticky='w', padx=5, pady=5, columnspan=2)
         if self.lora_models:
             default_lora_model = self.lora_models[-2]
         else:
             default_lora_model = 'No models found'
         self.lora_var.set(default_lora_model)  # default value
         self.lora_menu = tk.OptionMenu(self.master, self.lora_var, *self.lora_models)
-        self.lora_menu.grid(row=11, column=1, sticky='ew', padx=5, pady=0)
+        self.lora_menu.grid(row=11, column=0, sticky='ew', padx=5, pady=0, columnspan=2)
 
         #12 Divider
         self.divider = tk.Frame(self.master, height=10, bd=0, relief=tk.SUNKEN)
         self.divider.grid(row=12, column=0, sticky='ew', padx=5, pady=0, columnspan=2)
 
+        
+
+
         # Submit Button
-        # self.submit_button = tk.Button(self.master, text="Generate", command=self.submit)
-        # self.submit_button.grid(row=11, column=0, columnspan=2, sticky='ew', padx=5, pady=15, ipady=6)
+        # self.submit_button = tk.Button(self.master, text="Update", command=self.submit)
+        # self.submit_button.grid(row=12, column=1, sticky='ew', padx=5, pady=15, ipady=6)
 
 
         # Button setup with grid
@@ -188,8 +189,18 @@ class popup_GUI:
         with open(self.saved_parameters_path, 'w') as f:
             json.dump(self.user_input_data, f, indent=4)
         
-        # self.send_prompt()
+        with open(self.saved_parameters_path, 'w') as f:
+            json.dump(self.user_input_data, f, indent=4)
+        logging.info("Data submitted: %s", self.user_input_data)
+        # Optionally also track in a separate JSON for advanced analysis
+        self.track_user_behavior(self.user_input_data)
         
+    def track_user_behavior(self, data):
+        """Save data to a JSON file with a timestamp."""
+        with open('user_behavior.json', 'a') as f:
+            json.dump({'timestamp': datetime.now().isoformat(), 'data': data}, f)
+            f.write('\n')  # add newline to separate entries
+            
     def get_lora_model(self, path):
         try:
             return ["None"] + [model for model in os.listdir(path)]
@@ -368,9 +379,10 @@ class popup_GUI:
 if __name__ == "__main__":
     root = tk.Tk()
     width = 360
-    height = 855
+    height = 868
     x_position = 1200
     y_position = 50
     root.geometry(f'{width}x{height}+{x_position}+{y_position}')
+    logging.basicConfig(filename='user_activity.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
     app = popup_GUI(root, './temp')
     root.mainloop()
