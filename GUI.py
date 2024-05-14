@@ -26,8 +26,9 @@ class popup_GUI:
         self.master.title("LACE - by Kyle")
         self.master.attributes("-topmost", False)
         self.user_input_data = None  # store the parameters of GUI as a dictionary
-        self.lora_models = self.get_lora_model('./models/loras')    # Get the list of LoRA models
-
+        self.lora_models = self.get_model_path('./models/loras', 'lora')    # Get the list of LoRA models
+        self.cnet_models = self.get_model_path('./models/controlnet', 'controlnet')    # Get the list of ControlNet models
+        
         self.custom_font = font.Font(family="Helvetica", size=9)
         self.transparent_images = []
         self.counter = 0
@@ -47,7 +48,7 @@ class popup_GUI:
         self.sampling_step_slider.grid(row=1, column=0, sticky='ew', padx=5, pady=5)
 
         #2 LACE_step_slider Scale
-        self.LACE_step_slider = tk.Scale(self.master, from_=10, to=20, orient='horizontal', label='Preview Step')
+        self.LACE_step_slider = tk.Scale(self.master, from_=1, to=20, orient='horizontal', label='Preview Step')
         self.LACE_step_slider.set(12)
         self.LACE_step_slider.grid(row=1, column=1, sticky='ew', padx=5, pady=5)
 
@@ -77,15 +78,14 @@ class popup_GUI:
         self.prompt_positive_entry = tk.Text(self.master, height=3, width=48, wrap=tk.WORD, font=self.custom_font)
         self.prompt_positive_label.grid(row=4, column=0, sticky='w', padx=5, pady=0, columnspan=2)
         self.prompt_positive_entry.grid(row=5, column=0, sticky='new', padx=5, pady=5, columnspan=2, ipady=3)
-        self.prompt_positive_entry.insert(tk.END, "MATISSEE-ART")
-
+        
         #7 prompt_negative Entry
         self.prompt_negative_entry = tk.Entry(self.master)
         self.prompt_negative_label = tk.Label(self.master, text='Prompt Negative')
         self.prompt_negative_entry = tk.Text(self.master, height=3, width=48, wrap=tk.WORD, font=self.custom_font)
         self.prompt_negative_label.grid(row=6, column=0, sticky='w', padx=5, pady=0, columnspan=2)
         self.prompt_negative_entry.grid(row=7, column=0, sticky='new', padx=5, pady=5, columnspan=2, ipady=3)
-        self.prompt_negative_entry.insert(tk.END, "bad composition, blurry image, low resolution")
+        self.prompt_negative_entry.insert(tk.END, "")
 
         #8 noise_type OptionMenu
         self.noise_type_var = tk.StringVar(self.master)
@@ -115,17 +115,21 @@ class popup_GUI:
         self.lora_menu = tk.OptionMenu(self.master, self.lora_var, *self.lora_models)
         self.lora_menu.grid(row=11, column=0, sticky='ew', padx=5, pady=0, columnspan=2)
 
+        #12 Control Net OptionMenu     
+        self.cnet_var = tk.StringVar(self.master)  
+        self.cnet_label = tk.Label(self.master, text='Latent Mapping Mode')  
+        self.cnet_label.grid(row=12, column=0, sticky='w', padx=5, pady=5, columnspan=2)
+        if self.cnet_models:
+            default_cnet_model = self.cnet_models[0]
+        else:
+            default_cnet_model = 'No cnet models found'
+        self.cnet_var.set(default_cnet_model)  # default value
+        self.cnet_menu = tk.OptionMenu(self.master, self.cnet_var, *self.cnet_models)
+        self.cnet_menu.grid(row=13, column=0, sticky='ew', padx=5, pady=0, columnspan=2)
+
         #12 Divider
         self.divider = tk.Frame(self.master, height=10, bd=0, relief=tk.SUNKEN)
-        self.divider.grid(row=12, column=0, sticky='ew', padx=5, pady=0, columnspan=2)
-
-        
-
-
-        # Submit Button
-        # self.submit_button = tk.Button(self.master, text="Update", command=self.submit)
-        # self.submit_button.grid(row=12, column=1, sticky='ew', padx=5, pady=15, ipady=6)
-
+        self.divider.grid(row=14, column=0, sticky='ew', padx=5, pady=0, columnspan=2)
 
         # Button setup with grid
         self.toggle_button = tk.Button(self.master, text="📌", command=self.borderless)
@@ -173,18 +177,25 @@ class popup_GUI:
 
     def submit(self):
         # Collect all the values from the widgets and store them
+        
+        prompt_prefix = ''
+        if '_webui' in self.lora_var.get():
+            prompt_prefix += self.lora_var.get().split('_webui')[0]
+            prompt_prefix += ', '
+        
         self.user_input_data = {
             'num_output': int(self.num_output_var.get()),
             'noise_scale': self.noise_scale_slider.get(),
             'noise_type': self.noise_type_var.get(),
             'reverse_CADS': self.creative_mode_var.get(),
             'denoise': self.denoise_slider.get(),
-            'prompt_positive': self.prompt_positive_entry.get("1.0", tk.END).strip(),
+            'prompt_positive': f'{prompt_prefix}' + self.prompt_positive_entry.get("1.0", tk.END).strip(),
             'prompt_negative': self.prompt_negative_entry.get("1.0", tk.END).strip(),
             'lora_model': self.lora_var.get(),
             'visualized_steps': self.LACE_step_slider.get(),
             'sampling_steps': self.sampling_step_slider.get(),
             'strength': self.controlnet_slider.get(),
+            'cnet_model': self.cnet_var.get(),
         }
         with open(self.saved_parameters_path, 'w') as f:
             json.dump(self.user_input_data, f, indent=4)
@@ -196,14 +207,31 @@ class popup_GUI:
         self.track_user_behavior(self.user_input_data)
         
     def track_user_behavior(self, data):
-        """Save data to a JSON file with a timestamp."""
-        with open('user_behavior.json', 'a') as f:
-            json.dump({'timestamp': datetime.now().isoformat(), 'data': data}, f)
-            f.write('\n')  # add newline to separate entries
-            
-    def get_lora_model(self, path):
+        output_path = os.getcwd()
+        output_path = os.path.join(output_path, 'user_data')
+        if not os.path.exists(output_path):
+            os.makedirs(output_path)
+        file_path = os.path.join(output_path, 'user_behavior.json')
+        
         try:
-            return ["None"] + [model for model in os.listdir(path)]
+            with open(file_path, 'r') as file:
+                lines = file.readlines()
+                last_data = json.loads(lines[-1].strip())['data'] if lines else None
+        except FileNotFoundError:
+            last_data = None
+        
+        # Compare and write if different, excluding the timestamp from the comparison
+        current_data = {'timestamp': datetime.now().isoformat(), 'data': data}
+        if last_data is None or data != last_data:
+            with open(file_path, 'a') as file:
+                file.write(json.dumps(current_data) + '\n')
+            
+    def get_model_path(self, path, type='lora'):
+        try:
+            if type == 'lora':
+                return ["None"] + [model for model in os.listdir(path)]
+            if type == 'controlnet':
+                return [model for model in os.listdir(path)]
         except Exception as e:
             print(f"Error: {e}")
             return ["None"]
@@ -227,17 +255,6 @@ class popup_GUI:
 
         # Move the window
         self.master.geometry(f"+{new_x}+{new_y}")
-
-    def clear_folder(self, folder_path):
-        for filename in os.listdir(folder_path):
-            file_path = os.path.join(folder_path, filename)
-            try:
-                if os.path.isfile(file_path) or os.path.islink(file_path):
-                    os.unlink(file_path)
-                elif os.path.isdir(file_path):
-                    shutil.rmtree(file_path)
-            except Exception as e:
-                print(f'Failed to delete {file_path}. Reason: {e}')
 
     def load_images(self, folder_path):
         if not os.path.exists(folder_path):
@@ -276,33 +293,33 @@ class popup_GUI:
                 self.PS_window_title = title
                 break
     
-   
-
     def update_image(self):
-        latest_images = self.load_images(self.folder_path)
+        try:
+            latest_images = self.load_images(self.folder_path)
+            if latest_images != self.last_batch:
+                self.last_batch = latest_images
+                new_images_count = int(self.num_output_var.get())
 
-        if latest_images != self.last_batch:
-            self.last_batch = latest_images
-            new_images_count = int(self.num_output_var.get())
+                # Initialize or update transparent images if necessary
+                if not self.transparent_images or len(self.transparent_images) != len(self.display_queue):
+                    self.transparent_images = [Image.new("RGBA", (self.img_size, self.img_size), (0, 0, 0, 0)) for _ in range(max(len(self.display_queue), new_images_count))]
 
-            # Initialize or update transparent images if necessary
-            if not self.transparent_images or len(self.transparent_images) != len(self.display_queue):
-                self.transparent_images = [Image.new("RGBA", (self.img_size, self.img_size), (0, 0, 0, 0)) for _ in range(max(len(self.display_queue), new_images_count))]
-
-            # Overlay new images and initiate fade-in animations
-            for img_index, img_path in enumerate(latest_images[:new_images_count]):
-                render_idx = (self.counter + img_index) % (self.rows * self.columns)
-                pil_image = Image.open(img_path).resize((self.img_size, self.img_size), Image.Resampling.LANCZOS)
-                border_size = 3  # Size of the border
-                pil_image = ImageOps.expand(pil_image, border=border_size, fill='white')
-                x = (render_idx % self.columns) * self.img_size + self.img_size / 2
-                y = (render_idx // self.columns) * self.img_size + self.img_size / 2
-                delay = img_index * 500  # for example, 1000ms per image
-                self.master.after(delay, lambda x=x, y=y, pil_image=pil_image, img_path=img_path: self.fade_in_image(x, y, 0, 10, pil_image, img_path))
-            self.counter += new_images_count
-
-        self.submit()
-        self.master.after(1000, self.update_image)
+                # Overlay new images and initiate fade-in animations
+                for img_index, img_path in enumerate(latest_images[:new_images_count]):
+                    render_idx = (self.counter + img_index) % (self.rows * self.columns)
+                    pil_image = Image.open(img_path).resize((self.img_size, self.img_size), Image.Resampling.LANCZOS)
+                    border_size = 3  # Size of the border
+                    pil_image = ImageOps.expand(pil_image, border=border_size, fill='white')
+                    x = (render_idx % self.columns) * self.img_size + self.img_size / 2
+                    y = (render_idx // self.columns) * self.img_size + self.img_size / 2
+                    delay = img_index * 500  # for example, 1000ms per image
+                    self.master.after(delay, lambda x=x, y=y, pil_image=pil_image, img_path=img_path: self.fade_in_image(x, y, 0, 10, pil_image, img_path))
+                self.counter += new_images_count
+            self.submit()
+            self.master.after(1000, self.update_image)
+        except Exception as e:
+            print(f"Error in update_image: {e}")
+            self.master.after(1000, self.update_image)
 
     def fade_in_image(self, x, y, step, num_steps, pil_image, img_path):
         if step <= num_steps:
@@ -379,10 +396,10 @@ class popup_GUI:
 if __name__ == "__main__":
     root = tk.Tk()
     width = 360
-    height = 868
+    height = 930
     x_position = 1200
     y_position = 50
     root.geometry(f'{width}x{height}+{x_position}+{y_position}')
-    logging.basicConfig(filename='user_activity.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    # logging.basicConfig(filename='user_activity.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
     app = popup_GUI(root, './temp')
     root.mainloop()
