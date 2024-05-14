@@ -94,6 +94,23 @@ def encode_prompts(positive_prompt, negative_prompt, token_normalization, weight
         return positive_encoded, negative_encoded, clip, refiner_positive_encoded, refiner_negative_encoded, refiner_clip
 
 ########################################################################################################################
+class ControlNetLoader_LACE:
+    # pass
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {  "control_net_name": ("control_net_name",), }}
+
+    RETURN_TYPES = ("CONTROL_NET",)
+    FUNCTION = "load_controlnet"
+
+    CATEGORY = "LACE/Loaders"
+
+    def load_controlnet(self, control_net_name):
+        controlnet_path = folder_paths.get_full_path("controlnet", control_net_name)
+        controlnet = comfy.controlnet.load_controlnet(controlnet_path)
+        return (controlnet,)
+    
+########################################################################################################################
 # TSC Efficient Loader
 class TSC_EfficientLoader:
 
@@ -4284,6 +4301,7 @@ NODE_CLASS_MAPPINGS = {
     "HighRes-Fix Script": TSC_HighRes_Fix,
     "Tiled Upscaler Script": TSC_Tiled_Upscaler,
     "LACE Visualizer": VAEDecodeLACE,
+    "ControlNetLoader (LACE)": ControlNetLoader_LACE,
 }
 
 ########################################################################################################################
